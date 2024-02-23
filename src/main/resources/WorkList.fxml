@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.WorkListController"
+      prefHeight="400.0" prefWidth="600.0"
+      style="-fx-background-color: lightblue;">
+
+    <TableView fx:id="workTable" prefHeight="300.0" prefWidth="600.0">
+        <columns>
+            <TableColumn text="Location" fx:id="locationColumn"/>
+            <TableColumn text="Start Date" fx:id="startDateColumn"/>
+            <TableColumn text="End Date" fx:id="endDateColumn"/>
+            <TableColumn text="Description" fx:id="descriptionColumn"/>
+            <TableColumn text="Is Active" fx:id="isActiveColumn"/>
+            <!-- Add more columns if needed -->
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Modifier" onAction="#modifyButtonClicked"/>
+        <Button text="Supprimer" onAction="#supprimerButtonClicked"/>
+    </HBox>
+
+</VBox>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextArea?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.AjouterWorkController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: lightblue;"
+>
+
+    <children>
+        <Label layoutX="82.0" layoutY="50.0" prefHeight="18.0" prefWidth="65.0" text="Location" />
+        <TextField layoutX="215.0" layoutY="47.0" fx:id="locationField" />
+
+        <Label layoutX="82.0" layoutY="100.0" prefHeight="18.0" prefWidth="65.0" text="Start Date" />
+        <DatePicker layoutX="215.0" layoutY="97.0" fx:id="startDatePicker" />
+
+        <Label layoutX="82.0" layoutY="150.0" prefHeight="18.0" prefWidth="65.0" text="End Date" />
+        <DatePicker layoutX="215.0" layoutY="147.0" fx:id="endDatePicker" />
+
+        <Label layoutX="82.0" layoutY="200.0" prefHeight="18.0" prefWidth="65.0" text="Description" />
+        <TextField layoutX="215.0" layoutY="197.0" fx:id="descriptionArea" /> <!-- Change this line to use TextArea -->
+
+        <Label layoutX="82.0" layoutY="250.0" prefHeight="18.0" prefWidth="65.0" text="Is Active" />
+        <CheckBox layoutX="215.0" layoutY="247.0" fx:id="isActiveCheckbox" text="Is Active" />
+
+
+        <Button layoutX="460.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Add Work" onAction="#ajouterButtonClicked" />
+    </children>
+</AnchorPane>

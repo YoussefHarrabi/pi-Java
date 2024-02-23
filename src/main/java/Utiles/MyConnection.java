@@ -5,35 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MyConnection {
-
-    private final String url="jdbc:mysql://localhost:3306/3a3";
-    private final String login="root";
-    private final String mdp="";
-    public  static MyConnection instance;
-
-    Connection cnx;
-
-public MyConnection(){
-    try {
-        cnx = DriverManager.getConnection(url,login,mdp);
-        System.out.println("Connexion établie!");
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-    }
-
-
-
-}
-    public Connection getCnx(){
-        return cnx;
+    public MyConnection() {
 
     }
 
-    public static MyConnection getInstance() {
-        if (instance == null) {
-            instance = new MyConnection();
+    // Méthode pour obtenir une connexion à la base de données
+    public static Connection getConnection() {
+        Connection connection = null; // Ajout de la déclaration de la variable
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pidev", "root", "");
+            System.out.println("connection etablie!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            // Gérer l'exception (journalisation, message utilisateur, etc.)
         }
-        return instance;
+        return connection;
     }
-
-    }
+}
