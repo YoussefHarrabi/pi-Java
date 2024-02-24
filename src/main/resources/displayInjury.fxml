@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.displayInjury">
+   <children>
+      <Label layoutX="269.0" layoutY="21.0" text="Injury">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <VBox layoutX="15.0" layoutY="61.0" prefHeight="200.0" prefWidth="570.0">
+         <children>
+            <HBox prefHeight="43.0" prefWidth="570.0">
+               <children>
+                  <Label text="Incident">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Type">
+                     <HBox.margin>
+                        <Insets left="30.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="severity">
+                     <HBox.margin>
+                        <Insets left="80.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="Incident" editable="false" prefHeight="31.0" prefWidth="87.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="type" editable="false" prefHeight="31.0" prefWidth="120.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="severity" editable="false">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <TableView fx:id="InjuryTab" layoutX="35.0" layoutY="161.0" prefHeight="200.0" prefWidth="549.0">
+        <columns>
+          <TableColumn fx:id="incidentIdColumn" prefWidth="264.0" text="Incident" />
+          <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="116.0" text="Type" />
+            <TableColumn fx:id="severityColumn" minWidth="0.0" prefWidth="168.0" text="severity" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

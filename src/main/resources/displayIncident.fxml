@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.displayIncident">
+   <children>
+      <TextField fx:id="placeTextField" editable="false" layoutX="35.0" layoutY="86.0" prefHeight="31.0" prefWidth="123.0" />
+      <TextField fx:id="hourTextField" editable="false" layoutX="191.0" layoutY="86.0" prefHeight="31.0" prefWidth="71.0" />
+      <TextField fx:id="descTextField" editable="false" layoutX="300.0" layoutY="86.0" />
+      <Label layoutX="35.0" layoutY="58.0" text="Place" />
+      <Label layoutX="191.0" layoutY="58.0" text="Hour" />
+      <Label layoutX="300.0" layoutY="58.0" text="Description" />
+      <Label layoutX="219.0" layoutY="14.0" text="Incidents">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="IncidentTab" layoutX="26.0" layoutY="158.0" prefHeight="200.0" prefWidth="549.0">
+         <columns>
+            <TableColumn fx:id="DescriptionColumn" prefWidth="192.0" text="Description" />
+            <TableColumn fx:id="HourColumn" minWidth="0.0" prefWidth="103.0" text="Hour" />
+            <TableColumn fx:id="PlaceColumn" minWidth="0.0" prefWidth="135.0" text="Place" />
+            <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="118.0" text="Type" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
