@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CommunMeansOfTransportInfo">
+   <children>
+      <TableView fx:id="listMoy" layoutX="78.0" layoutY="76.0" prefHeight="200.0" prefWidth="498.0">
+        <columns>
+          <TableColumn fx:id="id_moy" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="reg_moy" prefWidth="116.0" text="Registration" />
+            <TableColumn fx:id="type_moy" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="DeleteColumn" prefWidth="75.0" text="Delete" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
