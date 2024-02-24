@@ -16,5 +16,7 @@
       <Text layoutX="32.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="departure time" wrappingWidth="149.0" />
       <Text layoutX="32.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="seats wanted" />
       <Button layoutX="488.0" layoutY="321.0" mnemonicParsing="false" onAction="#add_request" text="submit" />
+      <Button layoutX="32.0" layoutY="22.0" mnemonicParsing="false" onAction="#go_back" text="go back" />
+      <Button layoutX="183.0" layoutY="22.0" mnemonicParsing="false" onAction="#list_request" text="view requests" />
    </children>
 </AnchorPane>

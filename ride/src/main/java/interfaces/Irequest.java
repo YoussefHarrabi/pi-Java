@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface Irequest<T> {
 
-        void addEntity(T t);
-        void updateEntity(T t, int id);
-        void deleteEntity(int id);
-        List<T> getallData();
+        void addRequest(T t);
+        void updateRequest(T t, int id);
+        void deleteRequest(int id);
+        List<T> getallrequest();
     }
 
 
