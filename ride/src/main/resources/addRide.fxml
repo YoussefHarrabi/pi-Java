@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.addRide">
+   <children>
+      <TextField fx:id="ride_name" layoutX="21.0" layoutY="73.0" />
+      <TextField fx:id="ride_startlocation" layoutX="21.0" layoutY="121.0" />
+      <TextField fx:id="ride_endlocation" layoutX="21.0" layoutY="175.0" />
+      <TextField fx:id="ride_time" layoutX="21.0" layoutY="221.0" />
+      <TextField fx:id="ride_seats" layoutX="21.0" layoutY="272.0" />
+      <Button layoutX="505.0" layoutY="339.0" mnemonicParsing="false" onAction="#addRider" text="add" />
+      <Text layoutX="21.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rider name" />
+      <Text layoutX="21.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seats" />
+      <Text layoutX="21.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+      <Text layoutX="21.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End location" />
+      <Text layoutX="21.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start location" />
+      <Button layoutX="28.0" layoutY="25.0" mnemonicParsing="false" onAction="#back_to_list" text="back " />
+   </children>
+</AnchorPane>
