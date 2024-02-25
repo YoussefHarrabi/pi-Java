@@ -89,4 +89,8 @@ public class Authentication {
 
     }
 
+    @FXML
+    void forgotPassword(ActionEvent event) {
+        switchScene("/ForgotPassword.fxml", event);
+    }
 }
