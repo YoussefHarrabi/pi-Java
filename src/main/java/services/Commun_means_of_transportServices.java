@@ -24,17 +24,16 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    */ }
+    */
+    }
 
     public static void addEntity2(Commun_means_of_transport Commun_means_of_transport) {
         String requete = " INSERT INTO Commun_means_of_transport (registration_number,type) Values (?,?)";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
-          //  pst.setInt(1,Commun_means_of_transport.getId());
-            pst.setInt(1,Commun_means_of_transport.getRegistration_number());
-            pst.setString(2,Commun_means_of_transport.getType());
-
-
+            //  pst.setInt(1,Commun_means_of_transport.getId());
+            pst.setInt(1, Commun_means_of_transport.getRegistration_number());
+            pst.setString(2, Commun_means_of_transport.getType());
 
 
             pst.executeUpdate();
@@ -64,18 +63,16 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-     }
+    }
 
     @Override
     public void deleteEntity(Commun_means_of_transport Commun_means_of_transport) {
 
 
-
-
         String requete = "DELETE FROM Commun_means_of_transport WHERE id=?";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
-            pst.setInt(1,  Commun_means_of_transport.getId());
+            pst.setInt(1, Commun_means_of_transport.getId());
 
             int rowsAffected = pst.executeUpdate();
 
@@ -89,17 +86,16 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         }
 
 
-
     }
 
     @Override
     public List<Commun_means_of_transport> getAllData() {
         List<Commun_means_of_transport> data = new ArrayList<>();
-        String requete= "SELECT * FROM Commun_means_of_transport";
+        String requete = "SELECT * FROM Commun_means_of_transport";
         try {
-            Statement st = MyConnection.getInstance ().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
-            while(rs.next()){
+            while (rs.next()) {
                 Commun_means_of_transport p = new Commun_means_of_transport();
                 p.setId(rs.getInt("id"));
                 p.setRegistration_number(rs.getInt("registration_number"));
@@ -113,6 +109,18 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         }
         return data;
     }
-}
 
+    public boolean isRegistrationNumberExists(int registrationNumber) {
+        String query = "SELECT * FROM Commun_means_of_transport WHERE registration_number = ?";
+        try (PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            preparedStatement.setInt(1, registrationNumber);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next(); // Si un enregistrement est trouvé, cela signifie que le numéro existe déjà.
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
 

@@ -28,8 +28,12 @@ public class Home extends Application {
         FXMLLoader loader = new FXMLLoader(Home.class.getResource(fxmlFileName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+      
         primaryStage.setScene(scene);
         primaryStage.show();
         return loader;
     }
+
+
+
 }
