@@ -46,6 +46,74 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
             System.out.println("Error occurred while adding user: " + e.getMessage());
         }
     }
+    public boolean isEmailExistsInDatabase(String email) {
+        String query = "SELECT COUNT(*) FROM Utilisateurs WHERE email=?";
+        try {
+            PreparedStatement statement = MyConnections.getInstance().getCnx().prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error occurred while checking email existence: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        String query = "UPDATE Utilisateurs SET `Mot de passe` = ? WHERE email = ?";
+
+        try {
+            PreparedStatement statement = MyConnections.getInstance().getCnx().prepareStatement(query);
+            statement.setString(1, newPassword);
+            statement.setString(2, email);
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Password reset successfully.");
+            } else {
+                System.out.println("Failed to reset password. User not found.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error resetting password: " + e.getMessage());
+        }
+    }
+    public boolean isVerificationCodeCorrect(String email, String verificationCode) {
+        String query = "SELECT verification_code FROM Utilisateurs WHERE email = ?";
+        try {
+            PreparedStatement statement = MyConnections.getInstance().getCnx().prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String storedVerificationCode = resultSet.getString("verification_code");
+                return verificationCode.equals(storedVerificationCode);
+            } else {
+                System.out.println("No user found with email: " + email);
+                return false; // Email not found in the database
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking verification code: " + e.getMessage());
+            return false; // Error occurred while querying the database
+        }
+    }
+
+
+    public void updateVerificationCode(String email, String verificationCode) {
+        String query = "UPDATE Utilisateurs SET verification_code = ? WHERE email = ?";
+        try {
+            PreparedStatement statement = MyConnections.getInstance().getCnx().prepareStatement(query);
+            statement.setString(1, verificationCode);
+            statement.setString(2, email);
+            statement.executeUpdate();
+            System.out.println("Verification code updated for user with email: " + email);
+        } catch (SQLException e) {
+            System.out.println("Error updating verification code: " + e.getMessage());
+        }
+    }
 
 
 
