@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.updateRide">
    <children>
       <TextField fx:id="ride_name" layoutX="31.0" layoutY="83.0" />
@@ -13,11 +12,12 @@
       <TextField fx:id="ride_endlocation" layoutX="31.0" layoutY="185.0" />
       <TextField fx:id="ride_time" layoutX="31.0" layoutY="231.0" />
       <TextField fx:id="ride_seats" layoutX="31.0" layoutY="282.0" />
-      <Button layoutX="515.0" layoutY="349.0" mnemonicParsing="false" onAction="#addRider" text="Button" />
+      <Button layoutX="515.0" layoutY="349.0" mnemonicParsing="false" onAction="#update_data" text="update" />
       <Text layoutX="31.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rider name" />
       <Text layoutX="31.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seats" />
       <Text layoutX="31.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
       <Text layoutX="31.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End location" />
       <Text layoutX="31.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start location" />
+      <Button layoutX="31.0" layoutY="26.0" mnemonicParsing="false" onAction="#back_home" text="back" />
    </children>
 </AnchorPane>

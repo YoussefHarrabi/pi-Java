@@ -72,7 +72,7 @@ public void addRequest(request request) {
 
     @Override
     public void deleteRequest(int id) {
-        String query = "DELETE FROM request WHERE id = ?";
+        String query = "DELETE FROM request WHERE id_request = ?";
         try {
             PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
             preparedStatement.setInt(1, id);
@@ -92,7 +92,7 @@ public void addRequest(request request) {
             ResultSet rs = srt.executeQuery(query);
             while(rs.next()){
                 request p = new request();
-                p.setId_request(rs.getInt("id"));
+                p.setId_request(rs.getInt("id_request"));
                 p.setStartLocation(rs.getString("startLocation"));
                 p.setEndLocation(rs.getString("endLocation"));
                 p.setDepartureTime(rs.getString("departureTime"));

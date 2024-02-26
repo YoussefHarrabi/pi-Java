@@ -43,7 +43,7 @@ public class addRide {
         rideService.addEntity(ride);
         listRide l = mainController.loadFXML("/listRide").getController();
         l.refreshlist();
-
+            mainController.loadFXML("/listRide.fxml");
     }}
     private boolean validateInputs() {
         String name = ride_name.getText();
@@ -59,8 +59,8 @@ public class addRide {
 
         try {
             int seats = Integer.parseInt(seatsText);
-            if(seats <= 0 || seats >= 8 ) {
-                showAlert("Number of seats must be a positive integer and <8.");
+            if(seats <= 0) {
+                showAlert("Number of seats must be a positive integer.");
                 return false;
             }
         } catch(NumberFormatException e) {
@@ -68,7 +68,7 @@ public class addRide {
             return false;
         }
 
-
+        // You can add more validation checks here if needed
 
         return true;
     }

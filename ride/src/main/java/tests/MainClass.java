@@ -11,7 +11,7 @@ public class MainClass {
         rideService rs = new rideService();
         //rs.addEntity(r1);
         //rs.deleteEntity(2);
-        rs.updateEntity(r2, 1);
+        //rs.updateEntity(r1);
         System.out.println(rs.getallData());
 
     }

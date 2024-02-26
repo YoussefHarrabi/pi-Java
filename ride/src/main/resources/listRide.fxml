@@ -3,15 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listRide">
+<AnchorPane prefHeight="420.0" prefWidth="710.0" styleClass="label" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listRide">
    <children>
-      <TableView fx:id="list_ride" layoutX="33.0" layoutY="100.0" prefHeight="200.0" prefWidth="534.0">
+      <TableView fx:id="list_ride" layoutX="6.0" layoutY="100.0" prefHeight="200.0" prefWidth="684.0" stylesheets="@Style.css">
         <columns>
-          <TableColumn fx:id="ride_id" prefWidth="34.0" text="ID" />
           <TableColumn fx:id="ride_drivername" prefWidth="147.0" text="Driver Name" />
             <TableColumn fx:id="ride_startlocation" prefWidth="90.0" text="Start Location" />
             <TableColumn fx:id="ride_endlocation" prefWidth="93.0" text="End Location" />
@@ -19,12 +16,7 @@
             <TableColumn fx:id="ride_seats" prefWidth="104.0" text="Available Seats" />
         </columns>
       </TableView>
-      <Button layoutX="502.0" layoutY="338.0" mnemonicParsing="false" onAction="#go_to_addRide" text="Add Ride" />
-      <Button layoutX="86.0" layoutY="339.0" mnemonicParsing="false" onAction="#delete_ride" text="Delete" />
-      <TextField fx:id="rideid_delete" layoutX="33.0" layoutY="339.0" prefHeight="25.0" prefWidth="51.0" />
-      <Text layoutX="33.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete a Ride" />
-      <Button layoutX="204.0" layoutY="339.0" mnemonicParsing="false" onAction="#update_ride" text="update" />
-      <TextField fx:id="id_update" layoutX="146.0" layoutY="339.0" prefHeight="25.0" prefWidth="51.0" />
-      <Button layoutX="33.0" layoutY="75.0" mnemonicParsing="false" onAction="#go_to_AddRequest" text="ask for a ride" />
+      <Button layoutX="502.0" layoutY="338.0" mnemonicParsing="false" onAction="#go_to_addRide" stylesheets="@Style.css" text="Add Ride" />
+      <Button layoutX="33.0" layoutY="75.0" mnemonicParsing="false" onAction="#go_to_AddRequest" stylesheets="@Style.css" text="ask for a ride" />
    </children>
 </AnchorPane>

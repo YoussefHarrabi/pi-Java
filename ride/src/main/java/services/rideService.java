@@ -59,6 +59,7 @@ public class rideService implements Iride<ride> {
     @Override
     public void updateEntity(ride ride, int id) {
         String query = "UPDATE ride SET driver = ?, startLocation = ?, endLocation = ?, departureTime = ?, availableSeats = ? WHERE id = ?";
+
         try {
             PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
             preparedStatement.setString(1, ride.getDriver());

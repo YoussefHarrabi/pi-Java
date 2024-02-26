@@ -3,18 +3,16 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+
+import javafx.scene.control.*;
 import entities.ride;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import services.rideService;
 
 public class listRide {
@@ -44,7 +42,7 @@ public class listRide {
 
 
     rideService rideService = new rideService();
-    @FXML
+    /*@FXML
     void delete_ride(ActionEvent event) {
         // Get the ID to delete
         int id_delete = Integer.parseInt(rideid_delete.getText());
@@ -64,7 +62,7 @@ public class listRide {
             }
         });
     }
-
+*/
     @FXML
     void go_to_addRide(ActionEvent event) throws IOException {
         mainController.loadFXML("/addRide.fxml");
@@ -77,15 +75,56 @@ public class listRide {
     @FXML
     void initialize() {
         ObservableList<ride> list = FXCollections.observableList(rideService.getallData());
-        ride_id.setCellValueFactory(new PropertyValueFactory<>("Id_driver"));
+        //ride_id.setCellValueFactory(new PropertyValueFactory<>("Id_driver"));
         ride_drivername.setCellValueFactory(new PropertyValueFactory<>("Driver"));
         ride_startlocation.setCellValueFactory(new PropertyValueFactory<>("StartLocation"));
         ride_endlocation.setCellValueFactory(new PropertyValueFactory<>("EndLocation"));
         ride_time.setCellValueFactory(new PropertyValueFactory<>("DepartureTime"));
         ride_seats.setCellValueFactory(new PropertyValueFactory<>("Availableseats"));
-
         list_ride.setItems(list);
 
+        TableColumn<ride, Void> actionButtonColumn = new TableColumn<>("Actions");
+        actionButtonColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteButton = new Button("Delete");
+            private final Button updateButton = new Button("Update");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    ride ride = getTableView().getItems().get(getIndex());
+                    rideService.deleteEntity(ride.getId_driver());
+                    list_ride.getItems().remove(ride);
+                });
+
+                updateButton.setOnAction(event -> {
+                    ride ride = getTableView().getItems().get(getIndex());
+                    try {
+                        FXMLLoader loader = mainController.loadFXML("/updateRide.fxml");
+                        updateRide updateController = loader.getController();
+                        updateController.retrievedata(ride);
+                        System.out.println("Selected");
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    // Implement the logic to navigate to the UpdateNews window
+
+                });
+
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox buttons = new HBox(deleteButton, updateButton);
+                    setGraphic(buttons);
+                }
+            }
+        });
+
+        list_ride.getColumns().add(actionButtonColumn);
     }
     public void refreshlist(){
         ObservableList<ride> updatedList = FXCollections.observableList(rideService.getallData());
@@ -101,4 +140,6 @@ public class listRide {
             updateController.setride(ride);
 
     }
+
+
 }
