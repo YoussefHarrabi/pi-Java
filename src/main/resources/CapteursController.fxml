@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.fxml.FXML?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.CapteursController"
+            prefHeight="500.0" prefWidth="800.0">
+
+    <children>
+        <!-- Titre -->
+        <Label text="Gérer les capteurs" style="-fx-font-size: 25; -fx-font-weight: bold;" layoutX="275.0" layoutY="30.0" />
+
+        <!-- Espace entre titre et formulaire -->
+        <VBox prefHeight="20.0" />
+
+        <!-- Image à côté du formulaire -->
+        <HBox spacing="130.0" layoutX="80.0" layoutY="200.0" alignment="CENTER">
+            <children>
+                <ImageView>
+                    <image>
+                        <Image url="/capteur.png" />
+                    </image>
+                    <!-- Spécifiez la largeur et la hauteur souhaitées sur l'ImageView -->
+                    <fitWidth>100.0</fitWidth>
+                    <fitHeight>100.0</fitHeight>
+                </ImageView>
+
+                <!-- Formulaire dans VBox -->
+                <VBox spacing="10.0" alignment="CENTER">
+                    <children>
+                        <TextField fx:id="nomField" promptText="Nom" />
+                        <TextField fx:id="typeField" promptText="Type" />
+                        <TextField fx:id="latitudeField" promptText="Latitude" />
+                        <TextField fx:id="longitudeField" promptText="Longitude" />
+                        <TextField fx:id="dateInstallationField" promptText="Date d'installation" />
+                        <Button fx:id="afficherListeButton" text="Afficher Liste" onAction="#afficherListeCapteurs" />
+                    </children>
+                </VBox>
+
+                <ImageView>
+                    <image>
+                        <Image url="/admin.png" />
+                    </image>
+                    <!-- Spécifiez la largeur et la hauteur souhaitées sur l'ImageView -->
+                    <fitWidth>100.0</fitWidth>
+                    <fitHeight>100.0</fitHeight>
+                </ImageView>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
+
+
