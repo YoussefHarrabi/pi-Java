@@ -1,5 +1,6 @@
 package controles;
 
+import entities.Incident;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -64,5 +65,25 @@ public class Home extends Application {
             throw new RuntimeException(e);
         }
     }
+    public static void switchSceneWithDataInjury(Stage primaryStage, String fxml,int id, int incidentId, String type, String severity, int numberOfPersons) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Home.class.getResource(fxml));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            String css = Home.class.getResource("/Style.css").toExternalForm();
+            scene.getStylesheets().add(css);
+            primaryStage.setScene(scene);
+
+            // Access controller to set data
+            UpdateInjury controller = loader.getController();
+            controller.setData(id ,incidentId, type, severity, numberOfPersons);
+
+            primaryStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 }

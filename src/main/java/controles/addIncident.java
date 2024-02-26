@@ -1,18 +1,18 @@
 package controles;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.regex.Pattern;
 
+import entities.AutoCompleteTextField;
 import entities.Incident;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.stage.Stage;
 import services.IncidentServices;
 
 public class addIncident implements Initializable {
@@ -26,6 +26,12 @@ public class addIncident implements Initializable {
             "Animal Crossing",
             "Road Construction",
             "Traffic Congestion"};
+    private static final String[] PLACES = {
+            "Place 1",
+            "Place 2",
+            "Place 3",
+            // Add more places as needed
+    };
 
     @FXML
     private ResourceBundle resources;
@@ -48,18 +54,24 @@ public class addIncident implements Initializable {
     @FXML
     private Button AddIncident;
 
+    @FXML
+    private Button back;
+
+    private AutoCompleteTextField autoCompleteTextField;
+
+
 
     @FXML
     void initialize() {
 
     }
-    public void onStartup() throws IOException{
-        String[] words = {"ariana", "sokra","manzah"};
-        TextFields.bindAutoCompletion(IncidentPlace,words);
-    }
+
 
     public void AddIncident(javafx.event.ActionEvent actionEvent) {
 
+        if (!validateInput()) {
+            return; // Exit method if input validation fails
+        }
 
         Incident incident = new Incident(incidentType.getSelectionModel().getSelectedItem(),IncidentPlace.getText(), IncidentHour.getText(),Description.getText());
         IncidentServices incidentServices = new IncidentServices();
@@ -73,9 +85,7 @@ public class addIncident implements Initializable {
             try {
                 Parent root = loader.load();
                 displayIncident displayincident = loader.getController();
-                displayincident.setPlaceTextField(IncidentPlace.getText());
-                displayincident.setHourTextField(IncidentHour.getText());
-                displayincident.setDescTextField(incidentType.getSelectionModel().getSelectedItem()+ " : " + Description.getText());
+
 
                 IncidentPlace.getScene().setRoot(root);
 
@@ -94,6 +104,52 @@ public class addIncident implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         incidentType.getItems().addAll(Type);
 
+        back.setOnMouseClicked(event -> {
+            Stage primaryStage = (Stage) back.getScene().getWindow(); // Get primaryStage
+            Home.switchScene(primaryStage, "/displayIncident.fxml");
+        });
+
+    }
+    public boolean validateInput() {
+        // Check if any field is null or empty
+        if (incidentType.getSelectionModel().isEmpty() || IncidentPlace.getText().isEmpty() ||
+                IncidentHour.getText().isEmpty() || Description.getText().isEmpty()) {
+            showAlert("Please fill in all fields.");
+            return false;
+        }
+
+        // Check if Hour is in the correct format (HH:mm)
+        String hourInput = IncidentHour.getText();
+
+// Validate the format of the input
+        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", hourInput)) {
+            showAlert("Hour must be in the format HH:mm.");
+            return false;
+        }
+
+// Split the hour and minute parts
+        String[] parts = hourInput.split(":");
+        int hour = Integer.parseInt(parts[0]);
+        int minute = Integer.parseInt(parts[1]);
+
+// Validate the hour and minute values
+        if (hour > 24 || minute > 59) {
+            showAlert("Hour must be between 00:00 and 24:00.");
+            return false;
+        }
+
+
+        // All validation checks passed
+        return true;
     }
 
+    // Utility method to show an alert dialog
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
 }
+

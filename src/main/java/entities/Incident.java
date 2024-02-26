@@ -78,4 +78,13 @@ public class Incident {
                 ", Description='" + Description + '\'' +
                 '}';
     }
+    public static Incident getIncident(){
+        String type = getIncident().getType();// Assuming typeComboBox is a ComboBox<String>
+        String place = getIncident().getPlace(); // Assuming placeTextField is a TextField
+        String hour = getIncident().getHour(); // Assuming hourTextField is a TextField
+        String description = getIncident().getDescription(); // Assuming descriptionTextField is a TextField
+
+        // Create and return an Incident object
+        return new Incident(type, place, hour, description);
+    }
 }

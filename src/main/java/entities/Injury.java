@@ -5,21 +5,24 @@ public class Injury {
     int incidentId;
     String type;
     String severity;
+    int Number_pers;
 
     public Injury() {
     }
 
-    public Injury(int id, int incidentId, String type, String severity) {
+    public Injury(int id, int incidentId, String type,int number_pers, String severity) {
         this.id = id;
         this.incidentId = incidentId;
         this.type = type;
+        this.Number_pers = number_pers;
         this.severity = severity;
     }
 
-    public Injury(int incidentId, String type, String severity) {
+    public Injury(int incidentId, String type,int number_pers, String severity) {
         this.incidentId = incidentId;
         this.type = type;
         this.severity = severity;
+        this.Number_pers = number_pers;
     }
 
     public int getId() {
@@ -54,13 +57,30 @@ public class Injury {
         this.severity = severity;
     }
 
+    public int getNumber_pers() {
+        return Number_pers;
+    }
+
+    public void setNumber_pers(int number_pers) {
+        Number_pers = number_pers;
+    }
+
     @Override
     public String toString() {
         return "Injury{" +
-                "id=" + id +
-                ", incidentId=" + incidentId +
+                "incidentId=" + incidentId +
                 ", type='" + type + '\'' +
                 ", severity='" + severity + '\'' +
+                ", Number_pers=" + Number_pers +
                 '}';
+    }
+    public static Incident getIncident(){
+        String type = getIncident().getType();// Assuming typeComboBox is a ComboBox<String>
+        String place = getIncident().getPlace(); // Assuming placeTextField is a TextField
+        String hour = getIncident().getHour(); // Assuming hourTextField is a TextField
+        String description = getIncident().getDescription(); // Assuming descriptionTextField is a TextField
+
+        // Create and return an Incident object
+        return new Incident(type, place, hour, description);
     }
 }

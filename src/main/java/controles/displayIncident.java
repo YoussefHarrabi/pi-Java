@@ -25,13 +25,16 @@ public class displayIncident implements Initializable {
     private URL location;
 
     @FXML
-    private TextField placeTextField;
+    private Button AddButton;
 
     @FXML
-    private TextField hourTextField;
+    private Button DeleteButton;
 
     @FXML
-    private TextField descTextField;
+    private Button injury;
+
+
+
     @FXML
     private TableView<Incident> IncidentTab;
 
@@ -51,17 +54,6 @@ public class displayIncident implements Initializable {
     void initialize() {
 
     }
-    public void setPlaceTextField(String placeTextField) {
-        this.placeTextField.setText(placeTextField);
-    }
-
-    public void setHourTextField(String hourTextField) {
-        this.hourTextField.setText(hourTextField);
-    }
-
-    public void setDescTextField(String descTextField) {
-        this.descTextField.setText(descTextField);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,8 +62,8 @@ public class displayIncident implements Initializable {
         PlaceColumn.setCellValueFactory(new PropertyValueFactory<>("Place"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("Type"));
         // Fetch all injuries from the database
-        IncidentServices injuryServices = new IncidentServices();
-        List<Incident> incidents = injuryServices.getAllData();
+        IncidentServices incidentServices = new IncidentServices();
+        List<Incident> incidents = incidentServices.getAllData();
 
 
 
@@ -93,11 +85,35 @@ public class displayIncident implements Initializable {
                     Stage primaryStage = (Stage) IncidentTab.getScene().getWindow(); // Get primaryStage
                     Home.switchSceneWithData(primaryStage, "/UpdateIncident.fxml",IncidentId, type, place, hour, description);
                 });
+
             }
+        });
+        AddButton.setOnMouseClicked(event -> {
+            Stage primaryStage = (Stage) IncidentTab.getScene().getWindow(); // Get primaryStage
+            Home.switchScene(primaryStage, "/addIncident.fxml");
+        });
+        DeleteButton.setOnMouseClicked(event -> {
+            Stage primaryStage = (Stage) IncidentTab.getScene().getWindow(); // Get primaryStage
+            Home.switchScene(primaryStage, "/DeleteIncident.fxml");
+        });
+        injury.setOnMouseClicked(event -> {
+            Stage primaryStage = (Stage) IncidentTab.getScene().getWindow(); // Get primaryStage
+            Home.switchScene(primaryStage, "/displayInjury.fxml");
         });
 
 
 
+
+    }
+
+
+    @FXML
+    void AddButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void DeleteButton(ActionEvent event) {
 
     }
 }

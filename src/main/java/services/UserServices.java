@@ -1,6 +1,6 @@
 package services;
 
-import Interfaces.Iservices;
+
 import Utiles.MyConnection;
 import entities.Users;
 
@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserServices implements Iservices<Users> {
+public class UserServices implements interfaces.IServices<Users> {
     @Override
     public void addEntity(Users users) {
         String requete= "INSERT INTO Users (nom,prenom) VALUES ('"+users.getNom()+"','"+users.getPrenom()+"')";
@@ -39,7 +39,7 @@ public class UserServices implements Iservices<Users> {
     }
 
     @Override
-    public void updateEntity(Users users) {
+    public void updateEntity(Users users,int id) {
 
     }
 

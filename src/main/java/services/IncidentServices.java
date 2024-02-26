@@ -2,7 +2,7 @@ package services;
 
 import entities.Incident;
 import interfaces.IServices;
-import utiles.MyConnection;
+import Utiles.MyConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,16 +27,33 @@ public class IncidentServices implements IServices<Incident> {
     }
 
     @Override
-    public void updateEntity(Incident incident) {
-        String requete = "UPDATE incident SET Type = ?, Place = ?, Hour = ?, Description = ? WHERE IncidentId = ?";
+    public void updateEntity(Incident incident,int id) {
+        String query = "UPDATE incident SET Type=?, Place=?, Hour=?, Description=? WHERE IncidentId="+id;
         try {
-            Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
-            System.out.println("Incident updated!!");
+            PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query);
+            preparedStatement.setString(1, incident.getType());
+            preparedStatement.setString(2, incident.getPlace());
+            preparedStatement.setString(3, incident.getHour());
+            preparedStatement.setString(4, incident.getDescription());
+
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Incident with ID " + id + " updated successfully");
+            } else {
+                System.out.println("No Incident found with ID " + id + " for updating");
+            }
+
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
+
+
+
 
     @Override
     public void deleteEntity(Incident incident) {
