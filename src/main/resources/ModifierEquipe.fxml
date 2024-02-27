@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ComboBox?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.ModifierEquipeController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Modifier Équipe" style="-fx-font-size: 18px;"/>
+        <!-- Champs similaires à ceux de l'ajout d'équipe -->
+        <TextField fx:id="numberOfPersonsField" promptText="Nombre de personnes"/>
+        <TextField fx:id="budgetField" promptText="AppartientA"/>
+        <ComboBox fx:id="listOfWorks" promptText="Select Work"/>
+
+        <!-- Ajoutez d'autres champs selon votre modèle -->
+        <Button fx:id="saveButton" text="Enregistrer" onAction="#modifierButtonClicked"/>
+
+    </VBox>
+
+</AnchorPane>

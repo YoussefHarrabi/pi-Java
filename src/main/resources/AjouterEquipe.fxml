@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.AjouterEquipeController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label layoutX="30.0" layoutY="25.0" text="Ajouter Equipe">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="numberOfPersonsField" layoutX="30.0" layoutY="70.0" promptText="Nombre de personnes" />
+        <TextField fx:id="budgetField" layoutX="30.0" layoutY="110.0" promptText="AppartientA" />
+
+
+        <!-- Add ComboBox for selecting Work -->
+        <ComboBox fx:id="listOfWorks" layoutX="30.0" layoutY="190.0" promptText="Select Work" />
+
+        <Button fx:id="ajouterButton" layoutX="30.0" layoutY="230.0" mnemonicParsing="false" onAction="#ajouterButtonClickedd" text="Ajouter" />
+    </children>
+
+</AnchorPane>

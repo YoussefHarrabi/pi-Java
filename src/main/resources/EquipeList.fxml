@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.EquipeListController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <TableView fx:id="equipeTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="nbrPersonneColumn" prefWidth="75.0" text="Nbr Personne" />
+                        <TableColumn fx:id="relationToColumn" prefWidth="75.0" text="Relation To" />
+                        <TableColumn fx:id="workColumn" prefWidth="75.0" text="Work Location" />
+                    </columns>
+                </TableView>
+                <HBox spacing="10">
+                    <Button text="Modifier" onAction="#handleModifierButton"/>
+                    <Button text="Supprimer" onAction="#supprimerButtonClicked"/>
+                    <Button text="Ajouter" onAction="#addWorkButtonClicked"/>
+                    <Button text="showWork" onAction="#showWorkButtonClicked"/>
+
+
+
+
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

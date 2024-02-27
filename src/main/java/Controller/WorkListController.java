@@ -133,6 +133,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
@@ -238,6 +239,29 @@ public class WorkListController {
             showAlert("No work selected", "Please select a work to delete.");
         }
     }
+    @FXML
+    void addWorkButtonClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterWork.fxml"));
+            Parent root = loader.load();
+
+            AjouterWorkController ajouterWorkController = loader.getController();
+            // Ajoutez d'autres initialisations si nécessaire
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add Work");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            // Actualisez la liste des travaux après l'ajout
+            refreshTable();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     void initialize() {
@@ -256,16 +280,6 @@ public class WorkListController {
 
         // Utilisez une CheckBoxTableCell pour gérer les valeurs booléennes
         isActiveColumn.setCellFactory(CheckBoxTableCell.forTableColumn(isActiveColumn));
-        /* Liste des suggestions (initialement vide)
-        List<String> suggestions = new ArrayList<>();
-
-// ...
-
-// Mettez à jour la liste des suggestions (par exemple, en récupérant des données de votre base de données)
-        suggestions = fetchDataFromDatabase(); // Remplacez ceci par votre logique de récupération de données dynamiques
-
-// Configuration de l'auto-complétion avec la nouvelle liste
-        TextFields.bindAutoCompletion(locationTextField, suggestions);*/
 
 
 
@@ -306,33 +320,26 @@ public class WorkListController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-    /*
-    // Méthode pour récupérer dynamiquement la liste des suggestions depuis la base de données
-    private List<String> fetchDataFromDatabase() {
-        List<String> suggestions = new ArrayList<>();
 
-        // Utilisez la connexion à la base de données pour récupérer les données depuis la table appropriée
-        try (Connection connection = MyConnection.getConnection()) {
-            String query = "SELECT DISTINCT location FROM votre_table";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        String location = resultSet.getString("location");
-                        suggestions.add(location);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Gérez les exceptions appropriées
+    public void showTeamButtonClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipeList.fxml"));
+            Parent root = loader.load();
+
+            EquipeListController ajouterWorkController = loader.getController();
+            // Ajoutez d'autres initialisations si nécessaire
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add Team");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            // Actualisez la liste des travaux après l'ajout
+            refreshTable();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return suggestions;
     }
-
-    // Utilisez cette méthode dans votre initialiseur ou à un autre endroit approprié
-    private void configureAutoCompletion() {
-        List<String> suggestions = fetchDataFromDatabase();
-        ObservableList<String> observableSuggestions = FXCollections.observableArrayList(suggestions);
-        TextFields.bindAutoCompletion(locationColumn, observableSuggestions);
-    }*/
 }

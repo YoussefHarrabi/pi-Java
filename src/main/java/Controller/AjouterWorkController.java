@@ -60,12 +60,34 @@ public class AjouterWorkController {
 
 
         // Créer un nouvel objet Work avec les valeurs récupérées
+        if (location.isEmpty()){
+            showAlert("il faut qu'il etre supreriur a 0","verifier votre information");
+            return;
+        }
+        // Vérifier si les champs sont correctement remplis
+        if ( startDate==null) {
+            showAlert("Champ manquant", "Veuillez mettre date.");
+            return;
+        }
+        if ( endDate==null) {
+            showAlert("Champ manquant", "Veuillez mettre date.");
+            return;
+        }
+
+        if (description.isEmpty()) {
+            showAlert("Champ manquant", "Veuillez saisir une valeur pour la relation.");
+            return;
+        }
+
+
         Work newWork = new Work();
         newWork.setLocation(location);
         newWork.setStartdate(startDate);
         newWork.setEnddate(endDate);
         newWork.setDescription(description);
         newWork.setActive(isActive);
+
+
 
         // Ajouter le travail à la base de données en utilisant le WorkDAO
         WorkDAO workDAO = new WorkDAO();
@@ -77,7 +99,13 @@ public class AjouterWorkController {
         // Après avoir ajouté le travail, affichez les informations dans WorkInfo
         showWorkInfo(newWork.getLocation(), newWork.getStartdate(), newWork.getEnddate(), newWork.getDescription(), newWork.isActive());
 
-        configureAutoCompletion();
+        //configureAutoCompletion();
+    }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private boolean isValidDate(LocalDate date) {
@@ -104,6 +132,7 @@ public class AjouterWorkController {
             e.printStackTrace();
         }
     }
+    /*
     // Méthode pour obtenir dynamiquement la liste des suggestions depuis la base de données
     private List<String> fetchDataFromDatabase() {
         List<String> suggestions = new ArrayList<>();
@@ -123,17 +152,17 @@ public class AjouterWorkController {
         }
 
         return suggestions;
-    }
+    }*/
 
 
 
-    // Méthode pour configurer l'autocomplétion
+    /* Méthode pour configurer l'autocomplétion
     private void configureAutoCompletion() {
         assert locationField != null : "locationField is not injected!";
 
         List<String> suggestions = fetchDataFromDatabase();
         TextFields.bindAutoCompletion(locationField, suggestions);
-    }
+    }*/
 
 
 

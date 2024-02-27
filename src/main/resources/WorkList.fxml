@@ -24,8 +24,11 @@
     </TableView>
 
     <HBox spacing="10">
+        <Button text="Add Work" onAction="#addWorkButtonClicked"/>
         <Button text="Modifier" onAction="#modifyButtonClicked"/>
         <Button text="Supprimer" onAction="#supprimerButtonClicked"/>
+        <Button text="ShowTeam" onAction="#showTeamButtonClicked"/>
+
     </HBox>
 
 </VBox>
