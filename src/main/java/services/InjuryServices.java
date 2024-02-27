@@ -92,4 +92,31 @@ public class InjuryServices implements IServices<Injury> {
         }
         return data;
     }
+    public List<Injury> rechercherParMotCle(String keyword) {
+        // Récupérer la liste complète des blessures depuis la base de données
+        List<Injury> injuryList = getAllData();
+
+        List<Injury> injuriesTrouves = new ArrayList<>();
+
+        // Vous pouvez ajuster la condition de recherche selon vos besoins
+        for (Injury injury : injuryList) {
+            // Check if the keyword exists in any relevant attribute of the injury
+            if (containsKeyword(injury, keyword)) {
+                injuriesTrouves.add(injury);
+            }
+        }
+
+        return injuriesTrouves;
+    }
+
+    private boolean containsKeyword(Injury injury, String keyword) {
+        // Check if the keyword exists in any attribute of the injury
+        // Adjust this method based on the attributes of the Injury class
+        return String.valueOf(injury.getIncidentId()).contains(keyword) ||
+                injury.getType() != null && injury.getType().toLowerCase().contains(keyword.toLowerCase()) ||
+                injury.getSeverity() != null && injury.getSeverity().toLowerCase().contains(keyword.toLowerCase()) ||
+                String.valueOf(injury.getNumber_pers()).contains(keyword);
+        // Add additional attributes as needed
+    }
+
 }

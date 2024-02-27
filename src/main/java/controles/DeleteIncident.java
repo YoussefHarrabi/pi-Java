@@ -48,23 +48,36 @@ public class DeleteIncident implements Initializable {
             alert.setContentText("Please select an incident to delete.");
             alert.show();
             return;
+        }else{
+            DeleteIncident.setOnAction(event1 -> {
+                String confirmationMessage = "Are you sure you want to delete this incident?";
+                boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
+                if (confirmed) {
+                    // Perform the delete operation
+                    // For example: deleteIncident();
+                    IncidentServices incidentServices = new IncidentServices();
+                    try {
+                        incidentServices.deleteEntity(IncidentToDelete.getValue());
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayIncident.fxml"));
+
+                    }catch (Exception e){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText(e.getMessage());
+                        alert.show();
+                    }
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Incident deleted successfully");
+                    alert.show();
+
+                } else {
+                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                    alert2.setContentText("Delete operation cancelled.");
+                    alert2.show();
+                }
+            });
         }
 
-        IncidentServices incidentServices = new IncidentServices();
-        try {
-            incidentServices.deleteEntity(IncidentToDelete.getValue());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Incident deleted successfully");
-            alert.show();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayIncident.fxml"));
 
-
-
-        }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
     }
 
     @Override
@@ -75,21 +88,6 @@ public class DeleteIncident implements Initializable {
             Home.switchScene(primaryStage, "/displayIncident.fxml");
         });
 
-        DeleteIncident.setOnAction(event -> {
-            String confirmationMessage = "Are you sure you want to delete this incident?";
-            boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
-            if (confirmed) {
-                // Perform the delete operation
-                // For example: deleteIncident();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Incident deleted successfully");
-                alert.show();
 
-            } else {
-                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                alert2.setContentText("Delete operation cancelled.");
-                alert2.show();
-            }
-        });
     }
 }

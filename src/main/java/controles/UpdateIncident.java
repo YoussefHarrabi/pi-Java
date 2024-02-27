@@ -62,20 +62,33 @@ public class UpdateIncident implements Initializable {
         IncidentServices incidentServices = new IncidentServices();
         Incident incident = new Incident(type1,place,hour,description);
 
-        try {
-            incidentServices.updateEntity(incident,idIn);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Incident updated successfully");
-            alert.show();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayIncident.fxml"));
+        updateButton.setOnAction(event -> {
+            String confirmationMessage = "Are you sure you want to update this incident?";
+            boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
+            if (confirmed) {
+                try {
+                    incidentServices.updateEntity(incident,idIn);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Incident updated successfully");
+                    alert.show();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayIncident.fxml"));
 
 
 
-        }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+                }catch (Exception e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
+
+            } else {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setContentText("Update operation cancelled.");
+                alert2.show();
+            }
+        });
+
+
     }
     public void setData(int incidentId, String typess, String place, String hour, String description) {
         IncidentId.setText(String.valueOf(incidentId));
@@ -92,22 +105,7 @@ public class UpdateIncident implements Initializable {
             Stage primaryStage = (Stage) back.getScene().getWindow(); // Get primaryStage
             Home.switchScene(primaryStage, "/displayIncident.fxml");
         });
-        updateButton.setOnAction(event -> {
-            String confirmationMessage = "Are you sure you want to update this incident?";
-            boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
-            if (confirmed) {
-                // Perform the delete operation
-                // For example: deleteIncident();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Incident updated successfully");
-                alert.show();
 
-            } else {
-                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                alert2.setContentText("Update operation cancelled.");
-                alert2.show();
-            }
-        });
     }
     public boolean validateInput() {
         // Check if any field is null or empty

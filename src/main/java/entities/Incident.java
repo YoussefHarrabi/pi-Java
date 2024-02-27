@@ -9,6 +9,7 @@ public class Incident {
     String Place;
     String  Hour;
     String Description;
+    Date Date;
 
     public Incident() {
     }
@@ -66,6 +67,14 @@ public class Incident {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public java.util.Date getDate() {
+        return Date;
+    }
+
+    public void setDate(java.util.Date date) {
+        Date = date;
     }
 
     @Override

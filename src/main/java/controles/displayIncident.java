@@ -1,10 +1,15 @@
 package controles;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.sun.javafx.charts.Legend;
 import entities.Incident;
+import entities.Injury;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,8 +38,6 @@ public class displayIncident implements Initializable {
     @FXML
     private Button injury;
 
-
-
     @FXML
     private TableView<Incident> IncidentTab;
 
@@ -46,8 +49,33 @@ public class displayIncident implements Initializable {
 
     @FXML
     private TableColumn<Incident, String> PlaceColumn;
+
     @FXML
     private TableColumn<Incident, String> typeColumn;
+
+    @FXML
+    private TableColumn<Incident, Date> DateColumn;
+
+    @FXML
+    private TextField rechercheTextField;
+    @FXML
+    private void SearchType() {
+        // Récupérer le texte de recherche
+
+        String termeRecherche = rechercheTextField.getText().trim();
+        IncidentServices inc = new IncidentServices();
+
+        // Appeler la méthode de recherche avec le terme spécifié
+        List<Incident> resultats = inc.rechercherParMotCle(termeRecherche);
+
+        // Imprimer les résultats dans la console pour le débogage
+        System.out.println("searched result : " + resultats);
+
+        // Actualiser la TableView avec les résultats de la recherche
+        IncidentTab.setItems(FXCollections.observableArrayList(resultats));
+        IncidentTab.refresh();
+    }
+
 
 
     @FXML
@@ -61,12 +89,10 @@ public class displayIncident implements Initializable {
         HourColumn.setCellValueFactory(new PropertyValueFactory<>("Hour"));
         PlaceColumn.setCellValueFactory(new PropertyValueFactory<>("Place"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        DateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
         // Fetch all injuries from the database
         IncidentServices incidentServices = new IncidentServices();
         List<Incident> incidents = incidentServices.getAllData();
-
-
-
 
         // Populate the table with injuries
         IncidentTab.getItems().addAll(incidents);

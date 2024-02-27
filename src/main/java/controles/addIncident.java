@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import entities.AutoCompleteTextField;
 import entities.Incident;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -57,7 +58,23 @@ public class addIncident implements Initializable {
     @FXML
     private Button back;
 
+    @FXML
+    private MenuButton menu;
+
     private AutoCompleteTextField autoCompleteTextField;
+    @FXML
+    private void handleMenuItemAction(ActionEvent event) {
+        MenuItem selectedItem = (MenuItem) event.getSource();
+
+
+        for (MenuItem item : menu.getItems()) {
+            item.setStyle("-fx-text-fill: black;");
+        }
+
+
+        selectedItem.setStyle("-fx-text-fill: white;");
+    }
+
 
 
 
@@ -122,21 +139,22 @@ public class addIncident implements Initializable {
         String hourInput = IncidentHour.getText();
 
 // Validate the format of the input
-        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", hourInput)) {
-            showAlert("Hour must be in the format HH:mm.");
+        if (!Pattern.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$", hourInput.trim())) {
+            showAlert("Hour must be between 00:00 and 23:59");
             return false;
         }
-
 // Split the hour and minute parts
-        String[] parts = hourInput.split(":");
+      /*  String[] parts = hourInput.split(":");
         int hour = Integer.parseInt(parts[0]);
         int minute = Integer.parseInt(parts[1]);
 
 // Validate the hour and minute values
-        if (hour > 24 || minute > 59) {
-            showAlert("Hour must be between 00:00 and 24:00.");
+        if (hour > 23 || minute > 59) {
+            showAlert("Hour must be between 00:00 and 23:59.");
             return false;
-        }
+        }*/
+
+
 
 
         // All validation checks passed

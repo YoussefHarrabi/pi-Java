@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controles.displayIncident">
    <children>
-      <Label layoutX="264.0" layoutY="14.0" text="Incidents">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TableView fx:id="IncidentTab" layoutX="26.0" layoutY="60.0" prefHeight="267.0" prefWidth="549.0">
+      <TableView fx:id="IncidentTab" layoutX="26.0" layoutY="76.0" prefHeight="267.0" prefWidth="549.0">
          <columns>
-            <TableColumn fx:id="DescriptionColumn" prefWidth="192.0" text="Description" />
+            <TableColumn fx:id="DescriptionColumn" prefWidth="121.0" text="Description" />
+            <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="124.0" text="Type" />
             <TableColumn fx:id="HourColumn" minWidth="0.0" prefWidth="103.0" text="Hour" />
-            <TableColumn fx:id="PlaceColumn" minWidth="0.0" prefWidth="135.0" text="Place" />
-            <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="118.0" text="Type" />
+            <TableColumn fx:id="PlaceColumn" minWidth="0.0" prefWidth="104.0" text="Place" />
+            <TableColumn fx:id="DateColumn" minWidth="0.0" prefWidth="96.0" text="Date" />
          </columns>
       </TableView>
-      <Button fx:id="AddButton" layoutX="196.0" layoutY="339.0" mnemonicParsing="false" onAction="#AddButton" text="ADD" />
-      <Button fx:id="DeleteButton" layoutX="345.0" layoutY="339.0" mnemonicParsing="false" onAction="#DeleteButton" text="Delete" />
-      <Button fx:id="injury" layoutX="517.0" layoutY="12.0" mnemonicParsing="false" text="Injury" />
+      <Button fx:id="AddButton" layoutX="194.0" layoutY="355.0" mnemonicParsing="false" onAction="#AddButton" text="ADD" />
+      <Button fx:id="DeleteButton" layoutX="347.0" layoutY="355.0" mnemonicParsing="false" onAction="#DeleteButton" text="Delete" />
+      <HBox prefHeight="100.0" prefWidth="600.0">
+         <children>
+            <Label prefHeight="27.0" prefWidth="116.0" text="Incidents">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="30.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="rechercheTextField" promptText="search..">
+               <HBox.margin>
+                  <Insets left="50.0" top="30.0" />
+               </HBox.margin>
+            </TextField>
+      
+            <!-- Bouton de recherche -->
+            <Button onAction="#SearchType" text="Search">
+               <HBox.margin>
+                  <Insets left="10.0" top="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="injury" mnemonicParsing="false" text="Injury">
+               <HBox.margin>
+                  <Insets left="110.0" top="30.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

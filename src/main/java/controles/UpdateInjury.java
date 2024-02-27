@@ -62,21 +62,33 @@ public class UpdateInjury implements Initializable {
 
         // Create Injury object
         Injury injury = new Injury(incidentId, type, numberOfPersons, sev);
+        UInjury.setOnAction(event -> {
+            String confirmationMessage = "Are you sure you want to update this injury?";
+            boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
+            if (confirmed) {
+                // Update Injury entity
+                InjuryServices injuryServices = new InjuryServices();
+                try {
+                    injuryServices.updateEntity(injury,id1);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Injury updated successfully");
+                    alert.show();
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayInjury.fxml"));
 
-        // Update Injury entity
-        InjuryServices injuryServices = new InjuryServices();
-        try {
-            injuryServices.updateEntity(injury,id1);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Injury updated successfully");
-            alert.show();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/displayInjury.fxml"));
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
 
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
+            } else {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setContentText("Update operation cancelled.");
+                alert2.show();
+            }
+        });
+
+
     }
 
     @FXML
@@ -118,22 +130,7 @@ public class UpdateInjury implements Initializable {
             Home.switchScene(primaryStage, "/displayInjury.fxml");
         });
 
-        UInjury.setOnAction(event -> {
-            String confirmationMessage = "Are you sure you want to update this injury?";
-            boolean confirmed = AlertHelper.showConfirmationAlert(confirmationMessage);
-            if (confirmed) {
-                // Perform the delete operation
-                // For example: deleteIncident();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Injury updated successfully");
-                alert.show();
 
-            } else {
-                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                alert2.setContentText("Update operation cancelled.");
-                alert2.show();
-            }
-        });
     }
     private boolean validateInputInjury() {
         // Check for null or empty values in input fields

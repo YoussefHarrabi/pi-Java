@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import entities.Incident;
 import entities.Injury;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -47,6 +49,9 @@ public class displayInjury implements Initializable {
 
     @FXML
     private TableColumn<Injury, Integer> Numberpers;
+
+    @FXML
+    private TextField rechercheTextField;
 
     @FXML
     void initialize() {
@@ -103,4 +108,19 @@ public class displayInjury implements Initializable {
         });
     }
 
+    public void Search(ActionEvent actionEvent) {
+
+        String termeRecherche = rechercheTextField.getText().trim();
+        InjuryServices inj = new InjuryServices();
+
+        // Appeler la méthode de recherche avec le terme spécifié
+        List<Injury> resultats = inj.rechercherParMotCle(termeRecherche);
+
+        // Imprimer les résultats dans la console pour le débogage
+        System.out.println("searched result : " + resultats);
+
+        // Actualiser la TableView avec les résultats de la recherche
+        InjuryTab.setItems(FXCollections.observableArrayList(resultats));
+        InjuryTab.refresh();
+    }
 }
