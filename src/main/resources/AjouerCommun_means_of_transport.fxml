@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouerCommun_means_of_transport">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style%20(1).css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouerCommun_means_of_transport">
    <children>
       <Label layoutX="60.0" layoutY="57.0" text="Registration number" />
       <Label layoutX="96.0" layoutY="149.0" text="Type" />
       <TextField fx:id="reg" layoutX="288.0" layoutY="63.0" />
       <TextField fx:id="type" layoutX="288.0" layoutY="144.0" />
-      <Button layoutX="240.0" layoutY="264.0" mnemonicParsing="false" onAction="#addEntity2" text="Add" />
-      <Button layoutX="223.0" layoutY="321.0" mnemonicParsing="false" onAction="#showlist" text="go to list " />
+      <Button layoutX="229.0" layoutY="264.0" mnemonicParsing="false" onAction="#addEntity2" prefHeight="35.0" prefWidth="71.0" text="Add" />
+      <Button layoutX="181.0" layoutY="324.0" mnemonicParsing="false" onAction="#showlist" prefHeight="49.0" prefWidth="195.0" text="go to commun means list " />
    </children>
 </AnchorPane>

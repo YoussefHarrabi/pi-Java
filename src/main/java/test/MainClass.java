@@ -10,7 +10,7 @@ public class MainClass {
     public static void main(String[] args)
     { MyConnection mc =  MyConnection.getInstance();
 
-        Commun_means_of_transport p = new Commun_means_of_transport ( 235,"kia");
+        Commun_means_of_transport p = new Commun_means_of_transport ( "235","kia");
         //Commun_means_of_transportServices ps = new Commun_means_of_transportServices();
         //ps.addEntity2(p);
         //System.out.println(ps.getAllData());
@@ -19,12 +19,12 @@ public class MainClass {
         //ps.deleteEntity(p);
        // System.out.println(ps.getAllData());
 
-        Station s=new Station("lll","LaSeine");
+        Station s=new Station("DFGHGF","LaSeine");
         StationServices pst = new StationServices();
 
-        s.setName("birHkaiem");
+        s.setId(5);
         //pst.deleteEntity(s);
-       // pst.updateEntity(s);
+     //  pst.updateEntity(s);
 
 
 

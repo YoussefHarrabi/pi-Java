@@ -1,24 +1,28 @@
 package entities;
 
 public class Commun_means_of_transport {
-    private int registration_number;
+    private String registration_number;
     private int id;
     private String type;
 
     public Commun_means_of_transport() {
     }
 
-    public Commun_means_of_transport(int registration_number, String type) {
+    public Commun_means_of_transport(String registration_number, String type) {
         this.registration_number = registration_number;
 
         this.type = type;
     }
 
-    public int getRegistration_number() {
+
+
+
+
+    public String getRegistration_number() {
         return registration_number;
     }
 
-    public void setRegistration_number(int registration_number) {
+    public void setRegistration_number(String registration_number) {
         this.registration_number = registration_number;
     }
 

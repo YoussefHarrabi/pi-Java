@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CommunMeansOfTransportInfo">
+<AnchorPane prefHeight="506.0" prefWidth="642.0" stylesheets="@Style%20(1).css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CommunMeansOfTransportInfo">
    <children>
-      <TableView fx:id="listMoy" layoutX="78.0" layoutY="76.0" prefHeight="316.0" prefWidth="605.0">
+      <TableView fx:id="listMoy" layoutX="21.0" layoutY="46.0" prefHeight="331.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="id_moy" prefWidth="134.0" text="ID" />
           <TableColumn fx:id="reg_moy" prefWidth="160.0" text="Registration" />
             <TableColumn fx:id="type_moy" prefWidth="160.0" text="Type" />
-            <TableColumn fx:id="DeleteColumn" prefWidth="124.0" text="Actions" />
+            <TableColumn fx:id="DeleteColumn" prefWidth="138.0" text="Actions" />
         </columns>
       </TableView>
+      <Button layoutX="236.0" layoutY="396.0" mnemonicParsing="false" onAction="#go_to_station" text="Go to add station" />
+      <Button layoutX="191.0" layoutY="447.0" mnemonicParsing="false" onAction="#back_to_add_mean" text="Go back to add commun mean" />
    </children>
 </AnchorPane>

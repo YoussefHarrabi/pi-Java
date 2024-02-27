@@ -32,7 +32,7 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
             //  pst.setInt(1,Commun_means_of_transport.getId());
-            pst.setInt(1, Commun_means_of_transport.getRegistration_number());
+            pst.setString(1, Commun_means_of_transport.getRegistration_number());
             pst.setString(2, Commun_means_of_transport.getType());
 
 
@@ -49,7 +49,7 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete);
 
-            pst.setInt(1, Commun_means_of_transport.getRegistration_number());
+            pst.setString(1, Commun_means_of_transport.getRegistration_number());
             pst.setString(2, Commun_means_of_transport.getType());
             pst.setInt(3, Commun_means_of_transport.getId());
 
@@ -98,7 +98,7 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
             while (rs.next()) {
                 Commun_means_of_transport p = new Commun_means_of_transport();
                 p.setId(rs.getInt("id"));
-                p.setRegistration_number(rs.getInt("registration_number"));
+                p.setRegistration_number(rs.getString("registration_number"));
                 p.setType(rs.getString("type"));
 
 
@@ -110,7 +110,7 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
         return data;
     }
 
-    public boolean isRegistrationNumberExists(int registrationNumber) {
+    /*public boolean isRegistrationNumberExists(int registrationNumber) {
         String query = "SELECT * FROM Commun_means_of_transport WHERE registration_number = ?";
         try (PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query)) {
             preparedStatement.setInt(1, registrationNumber);
@@ -121,6 +121,22 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
             e.printStackTrace();
             return false;
         }
+    } */
+
+
+    public boolean isRegistrationNumberExists(String registrationNumber) {
+        String query = "SELECT * FROM Commun_means_of_transport WHERE registration_number = ?";
+        try (PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query)) {
+            preparedStatement.setString(1, registrationNumber);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next(); // Si un enregistrement est trouvé, cela signifie que le numéro existe déjà.
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
+
 }
 

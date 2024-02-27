@@ -214,4 +214,12 @@ public class CommunMeansOfTransportInfo {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+
+    public void go_to_station(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/ajouterstation.fxml");
+    }
+
+    public void back_to_add_mean(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/AjouerCommun_means_of_transport.fxml");
+    }
 }
