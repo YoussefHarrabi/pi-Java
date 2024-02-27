@@ -1,4 +1,4 @@
-package controller;
+/* package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,3 +71,55 @@ import javax.xml.namespace.QName;
 
      }
  }
+ */
+
+package controller;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import services.StationServices;
+
+import java.io.IOException;
+
+public class ajouterstation {
+
+    @FXML
+    private TextField Name;
+
+    @FXML
+    private TextField Address;
+
+    @FXML
+    void ajouterstation(ActionEvent event) {
+        String name = Name.getText();
+        String address = Address.getText();
+
+        if (name.isEmpty() || address.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please fill in all fields.");
+            alert.show();
+            return;
+        }
+
+        StationServices ser = new StationServices();
+        ser.addEntity2(new entities.Station(name, address));
+
+        Alert alerte = new Alert(Alert.AlertType.INFORMATION);
+        alerte.setContentText("Added successfully");
+        alerte.show();
+    }
+
+    @FXML
+    void initialize() {
+    }
+
+    public void consulter_liste(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/stationinfo.fxml");
+    }
+
+    public void back_to_means_list(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/Commun_means_of_transportInfo.fxml");
+    }
+}

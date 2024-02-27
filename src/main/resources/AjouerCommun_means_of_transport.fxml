@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style%20(1).css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouerCommun_means_of_transport">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style%20(2).css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AjouerCommun_means_of_transport">
    <children>
       <Label layoutX="60.0" layoutY="57.0" text="Registration number" />
       <Label layoutX="96.0" layoutY="149.0" text="Type" />
