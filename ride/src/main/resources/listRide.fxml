@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="420.0" prefWidth="710.0" styleClass="label" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listRide">
    <children>
-      <TableView fx:id="list_ride" layoutX="6.0" layoutY="100.0" prefHeight="200.0" prefWidth="684.0" stylesheets="@Style.css">
+      <TableView fx:id="list_ride" layoutX="6.0" layoutY="100.0" prefHeight="200.0" prefWidth="684.0" stylesheets="@Style%20(1).css">
         <columns>
           <TableColumn fx:id="ride_drivername" prefWidth="147.0" text="Driver Name" />
             <TableColumn fx:id="ride_startlocation" prefWidth="90.0" text="Start Location" />

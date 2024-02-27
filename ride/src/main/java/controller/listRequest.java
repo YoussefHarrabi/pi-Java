@@ -65,7 +65,7 @@ requestService requestService = new requestService();
         // Show the confirmation dialog
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                // If user confirms, proceed with deletion
+
                 requestService.deleteRequest(id_delete);
                 refreshlist();
             }

@@ -4,6 +4,9 @@ import entities.ride;
 import interfaces.Irequest;
 import interfaces.Iride;
 import utils.MyConnection;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,21 +16,35 @@ import java.util.List;
 
 public class requestService implements Irequest<request> {
     @Override
-public void addRequest(request request) {
-    String requete = "INSERT INTO request (startLocation, endLocation, departureTime, availableseats) VALUES(?,?,?,?)";
-    try {
-        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(requete);
-        preparedStatement.setString(1, request.getStartLocation());
-        preparedStatement.setString(2, request.getEndLocation());
-        preparedStatement.setString(3, request.getDepartureTime());
-        preparedStatement.setInt(4, request.getAvailableseats());
 
-        preparedStatement.executeUpdate();
-        System.out.println("request added!");
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+
+    public void addRequest(request request) throws SQLException, IOException {
+        String requete = "INSERT INTO request (startLocation, endLocation, departureTime, availableseats) VALUES(?,?,?,?)";
+
+        // Check if the request already exists
+        if (istimeTaken(request.getDepartureTime()) && isRequestTaken(request.getStartLocation()) && isDestinationTaken(request.getEndLocation())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Request already exists!");
+
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(requete);
+            preparedStatement.setString(1, request.getStartLocation());
+            preparedStatement.setString(2, request.getEndLocation());
+            preparedStatement.setString(3, request.getDepartureTime());
+            preparedStatement.setInt(4, request.getAvailableseats());
+
+            preparedStatement.executeUpdate();
+            System.out.println("Request added!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
     public request getrequest(int id) {
         String query = "SELECT * FROM request WHERE id_request = ?";
@@ -51,7 +68,27 @@ public void addRequest(request request) {
         }
         return p;
     }
-
+    private boolean isRequestTaken(String start) throws SQLException {
+        String query = "SELECT * FROM ride WHERE startLocation = ?";
+        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, start);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }}
+    private boolean isDestinationTaken(String name) throws SQLException {
+        String query = "SELECT * FROM ride WHERE endLocation = ?";
+        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, name);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }}
+    private boolean istimeTaken(String name) throws SQLException {
+        String query = "SELECT * FROM ride WHERE departureTime = ?";
+        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, name);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }}
 
     @Override
     public void updateRequest(request request, int id) {

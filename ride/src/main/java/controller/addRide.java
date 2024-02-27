@@ -2,6 +2,9 @@ package controller;
 import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert.AlertType;
 import entities.ride;
@@ -36,7 +39,7 @@ public class addRide {
 
     rideService rideService = new rideService();
     @FXML
-    void addRider(ActionEvent event) throws IOException {
+    void addRider(ActionEvent event) throws IOException, SQLException {
         if(validateInputs()) {
         int seats = Integer.parseInt(ride_seats.getText());
         ride ride = new ride(ride_name.getText(),ride_startlocation.getText(),ride_endlocation.getText(),ride_time.getText(),seats);
@@ -68,7 +71,7 @@ public class addRide {
             return false;
         }
 
-        // You can add more validation checks here if needed
+
 
         return true;
     }
@@ -79,6 +82,8 @@ public class addRide {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
     @FXML
     void initialize() {
 

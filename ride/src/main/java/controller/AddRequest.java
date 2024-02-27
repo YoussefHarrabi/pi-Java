@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import entities.request;
 import entities.ride;
@@ -31,7 +32,7 @@ public class AddRequest {
     private TextField request_startLocation;
 requestService requestService = new requestService();
     @FXML
-    void add_request(ActionEvent event)throws IOException {
+    void add_request(ActionEvent event) throws IOException, SQLException {
         if(validateInputs()) {
             int seats = Integer.parseInt(request_seats.getText());
             request request = new request(request_startLocation.getText(),request_endLocation.getText(),request_departureTime.getText(),seats);

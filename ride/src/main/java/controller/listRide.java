@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.*;
@@ -42,27 +43,7 @@ public class listRide {
 
 
     rideService rideService = new rideService();
-    /*@FXML
-    void delete_ride(ActionEvent event) {
-        // Get the ID to delete
-        int id_delete = Integer.parseInt(rideid_delete.getText());
 
-        // Create a confirmation dialog
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete Ride");
-        alert.setContentText("Are you sure you want to delete this ride?");
-
-        // Show the confirmation dialog
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                // If user confirms, proceed with deletion
-                rideService.deleteEntity(id_delete);
-                refreshlist();
-            }
-        });
-    }
-*/
     @FXML
     void go_to_addRide(ActionEvent event) throws IOException {
         mainController.loadFXML("/addRide.fxml");
@@ -91,8 +72,17 @@ public class listRide {
             {
                 deleteButton.setOnAction(event -> {
                     ride ride = getTableView().getItems().get(getIndex());
-                    rideService.deleteEntity(ride.getId_driver());
-                    list_ride.getItems().remove(ride);
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("Delete Ride");
+                    alert.setContentText("Are you sure you want to delete this ride?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        rideService.deleteEntity(ride.getId_driver());
+                        list_ride.getItems().remove(ride);
+                    }
                 });
 
                 updateButton.setOnAction(event -> {

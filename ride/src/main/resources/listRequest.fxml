@@ -8,22 +8,22 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listRequest">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.listRequest">
    <children>
-      <TableView fx:id="list_request" layoutX="34.0" layoutY="83.0" prefHeight="234.0" prefWidth="467.0">
+      <TableView fx:id="list_request" layoutX="34.0" layoutY="83.0" prefHeight="234.0" prefWidth="467.0" stylesheets="@Style%20(1).css">
         <columns>
-          <TableColumn fx:id="request_id" prefWidth="42.0" text="ID" />
+          <TableColumn fx:id="request_id" prefWidth="42.0" styleClass="table-row-cell" text="ID" />
           <TableColumn fx:id="request_startlocation" prefWidth="107.0" text="start location" />
             <TableColumn fx:id="request_endlocation" prefWidth="112.0" text="end location" />
             <TableColumn fx:id="request_time" prefWidth="89.0" text="time" />
             <TableColumn fx:id="request_seats" prefWidth="51.0" text="seats " />
         </columns>
       </TableView>
-      <Button layoutX="34.0" layoutY="30.0" mnemonicParsing="false" onAction="#back_home" text="back" />
-      <TextField fx:id="requestid_delete" layoutX="99.0" layoutY="353.0" prefHeight="25.0" prefWidth="52.0" />
-      <TextField fx:id="id_update" layoutX="300.0" layoutY="353.0" prefHeight="25.0" prefWidth="52.0" />
-      <Button layoutX="161.0" layoutY="353.0" mnemonicParsing="false" onAction="#delete_request" text="delete" />
-      <Button layoutX="359.0" layoutY="353.0" mnemonicParsing="false" onAction="#update_request" text="update" />
+      <Button layoutX="34.0" layoutY="30.0" mnemonicParsing="false" onAction="#back_home" stylesheets="@Style%20(1).css" text="back" />
+      <TextField fx:id="requestid_delete" layoutX="99.0" layoutY="353.0" prefHeight="25.0" prefWidth="52.0" styleClass="text-field" stylesheets="@Style%20(1).css" />
+      <TextField fx:id="id_update" layoutX="300.0" layoutY="353.0" prefHeight="25.0" prefWidth="52.0" styleClass="text-field" stylesheets="@Style%20(1).css" />
+      <Button layoutX="161.0" layoutY="353.0" mnemonicParsing="false" onAction="#delete_request" stylesheets="@Style%20(1).css" text="delete" />
+      <Button layoutX="359.0" layoutY="353.0" mnemonicParsing="false" onAction="#update_request" stylesheets="@Style%20(1).css" text="update" />
       <ImageView fitHeight="38.0" fitWidth="41.0" layoutX="56.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@delete-icon-android-9.jpg" />

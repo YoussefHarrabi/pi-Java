@@ -2,7 +2,10 @@ package services;
 
 import entities.ride;
 import interfaces.Iride;
+import javafx.scene.control.Alert;
 import utils.MyConnection;
+
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +15,22 @@ import java.util.List;
 
 public class rideService implements Iride<ride> {
     @Override
-    public void addEntity(ride ride) {
+
+
+    public void addEntity(ride ride) throws SQLException, IOException {
         String requete = "INSERT INTO ride (driver, startLocation, endLocation, departureTime, availableSeats) VALUES(?,?,?,?,?)";
+
+        // Check if the ride already exists
+        if (isRideTaken(ride.getDriver()) && isTimeTaken(ride.getDepartureTime())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Ride already exists!");
+
+            alert.showAndWait();
+            return;
+        }
+
         try {
             PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(requete);
             preparedStatement.setString(1, ride.getDriver());
@@ -54,13 +71,39 @@ public class rideService implements Iride<ride> {
         }
         return p;
     }
-
+    private boolean isRideTaken(String name) throws SQLException {
+        String query = "SELECT * FROM ride WHERE driver = ?";
+        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, name);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }}
+    private boolean isTimeTaken(String time) throws SQLException {
+        String query = "SELECT * FROM ride WHERE departureTime = ?";
+        PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, time);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }}
 
     @Override
+
+
     public void updateEntity(ride ride, int id) {
         String query = "UPDATE ride SET driver = ?, startLocation = ?, endLocation = ?, departureTime = ?, availableSeats = ? WHERE id = ?";
 
         try {
+            // Check if the updated ride conflicts with existing rides
+            if (isRideTaken(ride.getDriver()) && isTimeTaken(ride.getDepartureTime())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Cannot update ride. Ride already exists!");
+
+                alert.showAndWait();
+                return;
+            }
+
             PreparedStatement preparedStatement = MyConnection.getInstance().getCon().prepareStatement(query);
             preparedStatement.setString(1, ride.getDriver());
             preparedStatement.setString(2, ride.getStartLocation());
@@ -74,6 +117,7 @@ public class rideService implements Iride<ride> {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public void deleteEntity(int id) {
