@@ -1,18 +1,22 @@
 package controller;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import entities.Commun_means_of_transport;
 import entities.Station;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import services.Commun_means_of_transportServices;
 import services.StationServices;
+
 
 public class stationinfo {
 
@@ -35,7 +39,12 @@ public class stationinfo {
     private TableColumn<?, ?> address;
 
     @FXML
-    private TableColumn<?, ?> actions;
+    private TableColumn<Station, Void> actions;
+
+
+    @FXML
+    StationServices statServices = new StationServices();
+
 
 
 
@@ -48,18 +57,64 @@ public class stationinfo {
         address.setCellValueFactory(new PropertyValueFactory<>("Address"));
 
         liststat.setItems(list);
-        
-        
+        actions.setCellFactory(param -> new TableCell<Station, Void>() {
+
+            final javafx.scene.control.Button deleteButton = new javafx.scene.control.Button("Delete");
+            final javafx.scene.control.Button updateButton = new javafx.scene.control.Button("Update");
+
+            private void deletestat(Station stat) {
+                statServices.deleteEntity(stat);
+                liststat.getItems().remove(stat);
+            }
+
+            {
+                deleteButton.setOnAction((ActionEvent event) -> {
+                    Station stat1 = getTableView().getItems().get(getIndex());
+                    if (confirmAction("Confirmation", "Voulez-vous vraiment supprimer cette ligne ?")) {
+                        deletestat(stat1);
+                    }
+                });
+                liststat.setItems(list);
+            }
+
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Station cmt = getTableView().getItems().get(getIndex());
+                    if (cmt != null) {
+                        HBox buttons = new HBox(deleteButton, updateButton);
+                        setGraphic(buttons);
+                    }
+                }
+            }
+        });
 
     }
 
 
-    public void back_to_add(javafx.event.ActionEvent actionEvent) throws IOException {
-        try {
-            Home.loadFXML("/ajouterstation.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+                public void back_to_add(javafx.event.ActionEvent actionEvent) throws IOException {
+                    try {
+                        Home.loadFXML("/ajouterstation.fxml");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-    }
+                }
+
+                private boolean confirmAction(String title, String message) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle(title);
+                    alert.setHeaderText(null);
+                    alert.setContentText(message);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    return result.isPresent() && result.get() == ButtonType.OK;
+                }
+
+
+
 }
