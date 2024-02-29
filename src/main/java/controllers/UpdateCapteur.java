@@ -1,7 +1,11 @@
 package controllers;
 
 import entities.Capteurs;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -9,6 +13,7 @@ import javafx.stage.Stage;
 import services.CapteursServices;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class UpdateCapteur {
     public Button sauvegarderButton;
@@ -28,7 +33,6 @@ public class UpdateCapteur {
     private TextField dateInstallationField;
 
 
-
     private Capteurs capteurAModifier;
     private ListeCapteursController listeCapteursController;
 
@@ -43,7 +47,6 @@ public class UpdateCapteur {
         longitudeField.setText(String.valueOf(capteur.getLongitude()));
         dateInstallationField.setText(capteur.getDateInstallation());
     }
-
 
 
     @FXML
@@ -63,19 +66,16 @@ public class UpdateCapteur {
 
         listeCapteursController.actualiserTableView();
 
-        // Fermez la fenêtre de modification
-        Stage stage = (Stage) nomField.getScene().getWindow();
-        stage.close();
     }
 
     @FXML
     private void initialize() {
-        // Autre initialisation
+
 
         // Récupérer la scène
         Scene scene = nomField.getScene();
 
-        // Vérifier si la scène est nulle
+
         if (scene != null) {
             // La scène n'est pas nulle, ajouter le CSS au contrôleur
             String css = getClass().getResource("/style.css").toExternalForm();
@@ -93,4 +93,29 @@ public class UpdateCapteur {
     }
 
 
+    public void retourVersListeCapteurs(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeCapteurs.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage listeCapteursStage = new Stage();
+            listeCapteursStage.setTitle("Sonsors List");
+            listeCapteursStage.setScene(scene);
+
+            // Fermer la fenêtre actuelle
+            Stage fenetreActuelle = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            fenetreActuelle.close();
+
+
+            listeCapteursStage.show();
+
+            // Fermer la fenêtre actuelle
+            ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gérer l'exception si le chargement échoue
+        }
+    }
 }
+

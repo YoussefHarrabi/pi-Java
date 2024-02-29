@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -69,13 +70,13 @@ public class ListeCapteursController {
         // Ajouter un écouteur de changement de propriété pour la propriété sceneProperty de la TableView
         capteursTableView.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) {
-                // La TableView est attachée à une scène, ajoutez le CSS
+                //ajoutez le CSS
                 String css = this.getClass().getResource("/style.css").toExternalForm();
                 newScene.getStylesheets().add(css);
             }
         });
 
-        // Vous pouvez également initialiser les données ici si nécessaire
+
         actualiserTableView();
     }
 
@@ -91,10 +92,6 @@ public class ListeCapteursController {
         capteursTableView.setItems(FXCollections.observableArrayList(capteursList));
     }
 
-    @FXML
-    private void rechercherButtonClicked() {
-        ouvrirInterfaceRecherche();
-    }
 
 
     @FXML
@@ -125,11 +122,16 @@ public class ListeCapteursController {
         if (capteurSelectionne != null) {
             // Ouvrir une nouvelle interface pour la modification
             ouvrirInterfaceModification(capteurSelectionne);
+
+            // Fermer la fenêtre actuelle
+            Stage fenetreActuelle = (Stage) capteursTableView.getScene().getWindow();
+            fenetreActuelle.close();
         } else {
             // Aucun capteur sélectionné, affichez un message d'erreur ou faites quelque chose d'autre
             System.out.println("Aucun capteur sélectionné pour la modification.");
         }
     }
+
 
     @FXML
     private void ouvrirInterfaceModification(Capteurs capteur) {
@@ -155,7 +157,7 @@ public class ListeCapteursController {
 
     @FXML
     void actualiserTableView() {
-        // Code pour actualiser la TableView
+
 
         // Récupérer la liste des capteurs actuelle
         ObservableList<Capteurs> capteursList = capteursTableView.getItems();
@@ -167,33 +169,8 @@ public class ListeCapteursController {
         afficherListeCapteurs();
     }
 
-    @FXML
-    private void ouvrirInterfaceRecherche() {
-        try {
-            // Charger l'interface de recherche depuis le fichier FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RechercheCapteurs.fxml"));
-            Parent root = loader.load();
 
-            // Créer une nouvelle scène
-            Scene scene = new Scene(root);
-
-            // Créer une nouvelle fenêtre modale pour l'interface de recherche
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setTitle("Interface de Recherche de Capteurs");
-            stage.setScene(scene);
-
-            // Afficher la fenêtre modale
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Gérer les erreurs de chargement de l'interface de recherche
-            showAlert("Erreur lors de l'ouverture de l'interface de recherche");
-        }
-    }
-
-    // Ajoutez cette méthode pour afficher une boîte de dialogue (vous pouvez l'adapter selon vos besoins)
+    //afficher une boîte de dialogue
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -222,6 +199,27 @@ public class ListeCapteursController {
     }
 
 
+    public void afficherAjoutCapteur(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CapteursController.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage ajoutCapteurStage = new Stage();
+            ajoutCapteurStage.setTitle("Add Sonsor");
+            ajoutCapteurStage.setScene(scene);
+
+            // Fermer la fenêtre actuelle
+            Stage fenetreActuelle = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            fenetreActuelle.close();
+
+
+            ajoutCapteurStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
 }
 
 

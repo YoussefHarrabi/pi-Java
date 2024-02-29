@@ -4,7 +4,7 @@ public class DonneesHistoriques {
     private int id;
     private int idCapteur;
     private String timestamp;
-    private String niveauEmbouteillage;
+    private int niveauEmbouteillage;
     private String alerte;
     private String conditionsMeteo;
 
@@ -33,11 +33,11 @@ public class DonneesHistoriques {
         this.timestamp = timestamp;
     }
 
-    public String getNiveauEmbouteillage() {
+    public int getNiveauEmbouteillage() {
         return niveauEmbouteillage;
     }
 
-    public void setNiveauEmbouteillage(String niveauEmbouteillage) {
+    public void setNiveauEmbouteillage(int niveauEmbouteillage) {
         this.niveauEmbouteillage = niveauEmbouteillage;
     }
 

@@ -23,6 +23,13 @@
 
         <dependency>
             <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>20.0.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>20.0.2</version>
         </dependency>
@@ -32,9 +39,30 @@
             <artifactId>javafx-controls</artifactId>
             <version>20.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>leaflet</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+
+
+
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>webjars</id>
+            <url>https://maven.webjars.org</url>
+        </repository>
+    </repositories>
+
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.openjfx</groupId>
@@ -57,4 +85,6 @@
     </build>
 
 </project>
+
+
 

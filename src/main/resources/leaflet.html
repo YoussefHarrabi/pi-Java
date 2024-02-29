@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map</title>
+    <!-- Inclure la bibliothèque Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Inclure la bibliothèque Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- ... autres balises head ... -->
+</head>
+
+<!-- ... (autres balises head) ... -->
+
+<body>
+    <!-- La carte sera affichée ici -->
+    <div id="map" style="height: 500px;"></div>
+
+    <!-- Votre script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Leaflet HTML chargé.');
+
+            // Initialiser la carte
+            var map = L.map('map').setView([51.505, -0.09], 13);
+
+            // Ajouter un fond de carte OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Définir la fonction coloredIcon
+            function coloredIcon(color) {
+                return L.divIcon({ className: 'leaflet-div-icon', html: '<i style="background-color:' + color + '"></i>' });
+            }
+
+            // Définir la fonction addMarker
+            function addMarker(latitude, longitude, markerColor) {
+                // Utiliser Leaflet pour ajouter un marqueur à la carte
+                var marker = L.marker([latitude, longitude], { icon: coloredIcon(markerColor) }).addTo(map);
+            }
+
+            // Appeler la fonction addMarker avec des coordonnées spécifiques
+            addMarker(51.51, -0.1, 'red');
+        });
+    </script>
+</body>
+
+</html>
+
+
+</html>
+
+
+
+
+
+
