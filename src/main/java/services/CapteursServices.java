@@ -148,6 +148,46 @@ public class CapteursServices implements IServices<Capteurs> {
 
     }
 
+    public List<Capteurs> getCapteursProches(int capteurId, double distanceMax) {
+        Capteurs capteurReference = getEntityById(capteurId); // Méthode pour récupérer un capteur par son ID
+
+        if (capteurReference != null) {
+            List<Capteurs> capteursProches = new ArrayList<>();
+
+            // Récupérez tous les capteurs de la base de données (vous pouvez optimiser selon votre situation)
+            List<Capteurs> tousLesCapteurs = getAllData();
+
+            for (Capteurs capteur : tousLesCapteurs) {
+                if (capteur.getIdCapteur() != capteurId) { // Évitez de comparer avec le capteur de référence lui-même
+                    double distance = haversine(
+                            capteurReference.getLatitude(), capteurReference.getLongitude(),
+                            capteur.getLatitude(), capteur.getLongitude()
+                    );
+
+                    if (distance <= distanceMax) {
+                        capteursProches.add(capteur);
+                    }
+                }
+            }
+
+            return capteursProches;
+        }
+
+        return new ArrayList<>(); // Retournez une liste vide si le capteur de référence n'est pas trouvé
+    }
+
+    // Formule de Haversine pour calculer la distance entre deux points géographiques
+    private double haversine(double lat1, double lon1, double lat2, double lon2) {
+        double R = 6371; // Rayon de la Terre en kilomètres
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
 
     @Override
     public List<Capteurs> getAllData() {
@@ -173,9 +213,30 @@ public class CapteursServices implements IServices<Capteurs> {
     }
 
     @Override
-    public DonneesHistoriques getEntityById(int id) {
-        return null;
+    public Capteurs getEntityById(int id) {
+        String requete = "SELECT * FROM capteurs WHERE idCapteur = ?";
+
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    Capteurs capteur = new Capteurs();
+                    capteur.setIdCapteur(rs.getInt("idCapteur"));
+                    capteur.setNom(rs.getString("Nom"));
+                    capteur.setType(rs.getString("Type"));
+                    capteur.setLatitude(rs.getFloat("Latitude"));
+                    capteur.setLongitude(rs.getFloat("Longitude"));
+                    capteur.setDateInstallation(rs.getString("DateInstallation"));
+                    return capteur;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null; // Retourne null si le capteur n'est pas trouvé
     }
+
 
 
     public List<Capteurs> rechercherParCritere(String critere, String valeurRecherche) {
@@ -212,31 +273,7 @@ public class CapteursServices implements IServices<Capteurs> {
         return resultats;
     }
 
-    // Méthode pour récupérer les données historiques par ID de capteur
-    public List<DonneesHistoriques> getHistoriquesByCapteurId(int idCapteur) {
-        List<DonneesHistoriques> historiques = new ArrayList<>();
-        String requete = "SELECT * FROM donneeshistoriques WHERE idCapteur = ?";
 
-        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete)) {
-            pst.setInt(1, idCapteur);
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    DonneesHistoriques donnee = new DonneesHistoriques();
-                    donnee.setId(rs.getInt("id"));
-                    donnee.setIdCapteur(rs.getInt("idCapteur"));
-                    donnee.setTimestamp(rs.getString("timestamp"));
-                    donnee.setNiveauEmbouteillage(rs.getInt("niveauEmbouteillage"));
-                    donnee.setAlerte(rs.getString("alerte"));
-                    donnee.setConditionsMeteo(rs.getString("conditionsMeteo"));
-                    historiques.add(donnee);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return historiques;
-    }
 
 
 

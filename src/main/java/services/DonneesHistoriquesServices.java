@@ -77,6 +77,31 @@ public class DonneesHistoriquesServices implements IServices<DonneesHistoriques>
         return null;
     }
 
+    // Méthode pour récupérer les données historiques par ID de capteur
+    public List<DonneesHistoriques> getHistoriquesByCapteurId(int idCapteur) {
+        List<DonneesHistoriques> historiques = new ArrayList<>();
+        String requete = "SELECT * FROM donneeshistoriques WHERE idCapteur = ?";
+
+        try (PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(requete)) {
+            pst.setInt(1, idCapteur);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    DonneesHistoriques donnee = new DonneesHistoriques();
+                    donnee.setId(rs.getInt("id"));
+                    donnee.setIdCapteur(rs.getInt("idCapteur"));
+                    donnee.setTimestamp(rs.getString("timestamp"));
+                    donnee.setNiveauEmbouteillage(rs.getInt("niveauEmbouteillage"));
+                    donnee.setAlerte(rs.getString("alerte"));
+                    donnee.setConditionsMeteo(rs.getString("conditionsMeteo"));
+                    historiques.add(donnee);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return historiques;
+    }
 }
 
 

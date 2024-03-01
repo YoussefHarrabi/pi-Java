@@ -1,7 +1,5 @@
 package Interfaces;
 
-import entities.DonneesHistoriques;
-
 import java.util.List;
 
 public interface IServices<T> {
@@ -13,5 +11,6 @@ public interface IServices<T> {
 
     List<T> getAllData();
 
-    DonneesHistoriques getEntityById(int id);
+    T getEntityById(int id);
 }
+

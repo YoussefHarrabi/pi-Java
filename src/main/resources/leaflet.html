@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaflet Map</title>
-    <!-- Inclure la bibliothèque Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
-    <!-- Inclure la bibliothèque Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-    <!-- ... autres balises head ... -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
-
-<!-- ... (autres balises head) ... -->
-
 <body>
-    <!-- La carte sera affichée ici -->
-    <div id="map" style="height: 500px;"></div>
 
-    <!-- Votre script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('Leaflet HTML chargé.');
+<div id="map" style="height: 500px;"></div>
 
-            // Initialiser la carte
-            var map = L.map('map').setView([51.505, -0.09], 13);
+<script>
+    // Chargez Leaflet de manière synchrone avant d'exécuter votre code
+    var leafletScript = document.createElement('script');
+    leafletScript.src = 'https://unpkg.com/leaflet/dist/leaflet.js';
+    leafletScript.onload = function () {
+        initializeMap();
+    };
+    document.head.appendChild(leafletScript);
 
-            // Ajouter un fond de carte OpenStreetMap
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
+    function initializeMap() {
+        var map = L.map('map').setView([33.8869, 9.5375], 7); // Coordonnées centrées de la Tunisie et niveau de zoom approprié
 
-            // Définir la fonction coloredIcon
-            function coloredIcon(color) {
-                return L.divIcon({ className: 'leaflet-div-icon', html: '<i style="background-color:' + color + '"></i>' });
-            }
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-            // Définir la fonction addMarker
-            function addMarker(latitude, longitude, markerColor) {
-                // Utiliser Leaflet pour ajouter un marqueur à la carte
-                var marker = L.marker([latitude, longitude], { icon: coloredIcon(markerColor) }).addTo(map);
-            }
+        // Expose la fonction addMarker pour être appelée depuis JavaFX
+        window.addMarker = function (idCapteur, latitude, longitude, couleur) {
+            console.log("Ajout du marqueur pour le capteur avec l'ID : " + idCapteur);
 
-            // Appeler la fonction addMarker avec des coordonnées spécifiques
-            addMarker(51.51, -0.1, 'red');
-        });
-    </script>
+            var marker = L.marker([latitude, longitude], {icon: customIcon(couleur)});
+            marker.addTo(map);
+            marker.bindPopup("ID Capteur: " + idCapteur);
+            marker.on('click', function () {
+                markerClicked(idCapteur);
+            });
+        };
+
+        function markerClicked(idCapteur) {
+            // Logique à exécuter lorsqu'un marqueur est cliqué
+            console.log("Marqueur cliqué pour le capteur avec l'ID : " + idCapteur);
+            // Vous pouvez ajouter plus de logique ici en fonction de vos besoins
+        }
+
+        function customIcon(couleur) {
+            return L.divIcon({
+                className: 'custom-icon',
+                iconSize: [30, 30],
+                iconAnchor: [15, 30],
+                popupAnchor: [0, -30],
+                html: '<div style="background-color: ' + couleur + '; width: 100%; height: 100%; border-radius: 50%;"></div>'
+            });
+        }
+    }
+</script>
+
 </body>
-
 </html>
 
-
-</html>
 
 
 
