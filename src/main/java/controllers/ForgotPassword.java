@@ -116,7 +116,7 @@ public class ForgotPassword {
         Content content = new Content("text/plain", bodyContent);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("");
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
@@ -177,5 +177,21 @@ public class ForgotPassword {
     void initialize() {
 
     }
+    private void switchScene2(String fxmlFile, ActionEvent event) {
+        try {
+            System.out.println("fxml:"+ fxmlFile);
 
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void goback(ActionEvent event) {
+        switchScene2("/Authentication.fxml", event);
+    }
 }

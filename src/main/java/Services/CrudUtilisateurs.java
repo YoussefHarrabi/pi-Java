@@ -32,20 +32,61 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
         }
 
         // If the email doesn't exist, proceed with adding the user
-        String requete = "INSERT INTO Utilisateurs (nom, prenom, email, `Mot de passe`, Rôle) VALUES ('" +
-                utilisateurs.getNom() + "','" +
-                utilisateurs.getPrenom() + "','" +
-                utilisateurs.getEmail() + "','" +
-                utilisateurs.getMotDePasse() + "','" +
-                utilisateurs.getRole() + "')";
-        try {
-            Statement st = MyConnections.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
+        String requete = "INSERT INTO Utilisateurs (nom, prenom, email, `Mot de passe`, Rôle, age) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement st = MyConnections.getInstance().getCnx().prepareStatement(requete)) {
+            st.setString(1, utilisateurs.getNom());
+            st.setString(2, utilisateurs.getPrenom());
+            st.setString(3, utilisateurs.getEmail());
+            st.setString(4, utilisateurs.getMotDePasse());
+            st.setString(5, utilisateurs.getRole());
+            st.setString(6, utilisateurs.getAge());
+            st.executeUpdate();
             System.out.println("User added!!");
         } catch (SQLException e) {
             System.out.println("Error occurred while adding user: " + e.getMessage());
         }
     }
+
+    public String getUserRoleByEmail(String email) {
+        String role = null;
+        String query = "SELECT `Rôle` FROM Utilisateurs WHERE email = ?";
+
+        try {
+            PreparedStatement statement = MyConnections.getInstance().getCnx().prepareStatement(query);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                role = resultSet.getString("Rôle");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving user role: " + e.getMessage());
+        }
+
+        return role;
+    }
+
+    public void addEntity2(Utilisateurs utilisateurs) {
+
+
+        // If the email doesn't exist, proceed with adding the user
+        String requete = "INSERT INTO Utilisateurs (nom, prenom, email, `Mot de passe`, Rôle, age) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement st = MyConnections.getInstance().getCnx().prepareStatement(requete)) {
+            st.setString(1, utilisateurs.getNom());
+            st.setString(2, utilisateurs.getPrenom());
+            st.setString(3, utilisateurs.getEmail());
+            st.setString(4, utilisateurs.getMotDePasse());
+            st.setString(5, "user");
+            st.setString(6, utilisateurs.getAge());
+            st.executeUpdate();
+            System.out.println("User added!!");
+        } catch (SQLException e) {
+            System.out.println("Error occurred while adding user: " + e.getMessage());
+        }
+    }
+
+
+
     public boolean isEmailExistsInDatabase(String email) {
         String query = "SELECT COUNT(*) FROM Utilisateurs WHERE email=?";
         try {
@@ -145,7 +186,8 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
                 "prenom='" + utilisateurs.getPrenom() + "', " +
                 "email='" + utilisateurs.getEmail() + "', " +
                 "`Mot de passe`='" + utilisateurs.getMotDePasse() + "', " +
-                "Rôle='" + utilisateurs.getRole() + "' " +
+                "Rôle='" + utilisateurs.getRole() + "', " +
+                "age='" + utilisateurs.getAge() + "' " + // Assuming the column name is 'birthdate'
                 "WHERE id=" + utilisateurs.getId();
         try {
             Statement st = MyConnections.getInstance().getCnx().createStatement();
@@ -155,6 +197,7 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
             System.out.println("Error occurred while updating user: " + e.getMessage());
         }
     }
+
 
 
     @Override
@@ -200,7 +243,7 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
     public List<Utilisateurs> getAllData() {
         List<Utilisateurs> userList = new ArrayList<>();
 
-        String query = "SELECT * FROM Utilisateurs";
+        String query = "SELECT id, nom, prenom, email, `Mot de passe`, `Rôle`, age FROM Utilisateurs"; // Include age field in the query
         try {
             Statement statement = MyConnections.getInstance().getCnx().createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -212,8 +255,9 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
                 String email = resultSet.getString("email");
                 String motDePasse = resultSet.getString("Mot de passe");
                 String role = resultSet.getString("Rôle");
+                String age = resultSet.getString("age"); // Retrieve age from the result set
 
-                Utilisateurs user = new Utilisateurs(id, nom, prenom, email, motDePasse, role);
+                Utilisateurs user = new Utilisateurs(id, nom, prenom, email, motDePasse, role, age); // Pass age to the constructor
                 userList.add(user);
             }
         } catch (SQLException e) {
@@ -222,4 +266,5 @@ public class CrudUtilisateurs implements CrudServices<Utilisateurs> {
 
         return userList;
     }
+
 }

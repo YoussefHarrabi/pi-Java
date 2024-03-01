@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Utilisateurs;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Authentication {
 
@@ -44,17 +45,22 @@ public class Authentication {
 
         // Fetch user data from the database
         Utilisateurs user = new CrudUtilisateurs().getUserByEmail(userEmail);
+        CrudUtilisateurs x = new CrudUtilisateurs();
 
         // Check if the user exists and the password matches
-        if (user != null && user.getMotDePasse().equals(pass)) {
-            // Navigate to the next screen or perform any other action
-            // For example:
-            // switchScene();
-            // Or show a success message
-            switchScene("/AjouterUser.fxml", event);
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome " + user.getPrenom() + "!");
+        if (user != null && BCrypt.checkpw(pass, user.getMotDePasse()) ) {
+            String userRole = x.getUserRoleByEmail(userEmail);
+            if (userRole != null && userRole.equals("User")) {
+                // Navigate to the ticket screen
+                switchScene("/Ticket/Ticket.fxml", event);
+                showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome " + user.getPrenom() + "!");
+            } else {
+                // Redirect to another page for users with roles other than "User"
+                switchScene("/AjouterUser.fxml", event); // Redirect to the admin page, for example
+                showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome Admin!");
+            }
         } else {
-            // Show error message
+            // Show error message for invalid email or password
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid email or password!");
         }
 
@@ -92,5 +98,9 @@ public class Authentication {
     @FXML
     void forgotPassword(ActionEvent event) {
         switchScene("/ForgotPassword.fxml", event);
+    }
+
+    public void register(ActionEvent event) {
+        switchScene("/Registre.fxml", event);
     }
 }

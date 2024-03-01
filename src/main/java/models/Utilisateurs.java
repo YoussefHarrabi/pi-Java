@@ -3,18 +3,46 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Utilisateurs {
+
+
+
+
     private int id;
     private StringProperty nom;
     private StringProperty prenom;
     private StringProperty email;
+
     private String motDePasse;
     private StringProperty role;
+    private StringProperty age; // Change the type to String
+
+
+    public String getAge() {
+        return age.get();
+    }
+
+    public StringProperty ageProperty() {
+        return age;
+    }
+
+    public Utilisateurs(StringProperty nom, StringProperty prenom, StringProperty email, String motDePasse, StringProperty age) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+        this.age = age;
+    }
+
+    public void setAge(String age) {
+        this.age.set(age);
+    }
 
     public Utilisateurs() {
         this.nom = new SimpleStringProperty();
         this.prenom = new SimpleStringProperty();
         this.email = new SimpleStringProperty();
         this.role = new SimpleStringProperty();
+        this.age = new SimpleStringProperty();
     }
 
     public Utilisateurs(int id, String nom, String prenom, String email, String motDePasse, String role) {
@@ -32,6 +60,25 @@ public class Utilisateurs {
         this.email = new SimpleStringProperty(email);
         this.motDePasse = motDePasse;
         this.role = new SimpleStringProperty(role);
+    }
+    public Utilisateurs(int id, String nom, String prenom, String email, String motDePasse, String role, String age) {
+        this.id = id;
+        this.nom = new SimpleStringProperty(nom);
+        this.prenom = new SimpleStringProperty(prenom);
+        this.email = new SimpleStringProperty(email);
+        this.motDePasse = motDePasse;
+        this.role = new SimpleStringProperty(role);
+        this.age = new SimpleStringProperty(age);
+    }
+
+
+    public Utilisateurs(String nom, String prenom, String email, String motDePasse, String role, String age) {
+        this.nom = new SimpleStringProperty(nom);
+        this.prenom = new SimpleStringProperty(prenom);
+        this.email = new SimpleStringProperty(email);
+        this.motDePasse = motDePasse;
+        this.role = new SimpleStringProperty(role);
+        this.age = new SimpleStringProperty(age);
     }
 
     public int getId() {

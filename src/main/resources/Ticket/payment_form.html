@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Payment Form</h1>
+    <form id="payment-form">
+        <input type="text" id="card-number" placeholder="Card Number">
+        <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YYYY)">
+        <input type="text" id="cvv" placeholder="CVV">
+        <!-- Other fields as needed -->
+        <button type="submit">Pay</button>
+    </form>
+
+    <script>
+        // Initialize Stripe.js with your publishable key
+        const stripe = Stripe('your_publishable_key_here');
+
+        // Create an instance of Elements
+        const elements = stripe.elements();
+
+        // Create an instance of the card Element
+        const card = elements.create('card');
+
+        // Mount the card Element to the card-number element
+        card.mount('#card-number');
+
+        // Handle form submission
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Tokenize the card information
+            const { token, error } = await stripe.createToken(card);
+
+            if (error) {
+                console.error('Error:', error);
+            } else {
+                // Pass the token to your server-side code
+                const formData = new FormData();
+                formData.append('token', token.id);
+
+                // Send the token to your server using fetch or another method
+                fetch('/process_payment', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Server response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

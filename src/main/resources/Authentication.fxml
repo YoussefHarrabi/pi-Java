@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Authentication">
+<StackPane prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Authentication" stylesheets="@Style.css">
     <children>
         <GridPane>
             <!-- Blue background on the left -->
-            <Pane style="-fx-background-color: #2196F3;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Pane GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <VBox alignment="CENTER" spacing="20">
-                    <Label style="-fx-text-fill: white; -fx-font-size: 24px;" text="Welcome" />
-                    <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="to Our Application" />
+                    <Label style="-fx-text-fill: white; -fx-font-size: 24px;" text="" />
+                    <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="" />
                 </VBox>
             </Pane>
 
@@ -34,6 +34,8 @@
                     <PasswordField fx:id="password" promptText="Enter your password" />
                     <Button fx:id="loginButton" defaultButton="true" onAction="#login" text="Login" />
                     <Hyperlink onAction="#forgotPassword" text="Forgot Password?" />
+                    <!-- New button for registration -->
+                    <Button fx:id="registerButton" onAction="#register" text="Register" />
                 </VBox>
             </StackPane>
          <columnConstraints>

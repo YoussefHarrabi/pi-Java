@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import models.Utilisateurs;
 import java.util.List;
 import Services.CrudUtilisateurs;
+import java.time.Period;
 
 public class DisplayUser {
 
@@ -39,6 +41,9 @@ public class DisplayUser {
 
     @FXML
     private TableView<Utilisateurs> userTable;
+    @FXML
+    private TableColumn<Utilisateurs, String> ageColumn; // Add age column
+
 
 
 
@@ -68,6 +73,7 @@ public class DisplayUser {
     }
 
 
+
     @FXML
     void modifyUser(ActionEvent event) {
         Utilisateurs selectedUser = userTable.getSelectionModel().getSelectedItem();
@@ -76,7 +82,8 @@ public class DisplayUser {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifyUser.fxml"));
                 Parent root = loader.load();
                 ModifyUserController controller = loader.getController();
-                controller.setUser(selectedUser);
+                controller.setUser(selectedUser); // Pass the selected user data to ModifyUserController
+                controller.setDisplayUserController(this); // Pass a reference to DisplayUser controller
 
                 Stage stage = new Stage();
                 stage.setTitle("Modify User");
@@ -87,6 +94,8 @@ public class DisplayUser {
 
                 // After the modification interface is closed, check if the modification was successful
                 if (controller.isModificationSuccessful()) {
+                    // Refresh the table
+                    refreshTable();
                     // Show an alert indicating that the user has been modified successfully
                     showAlert(Alert.AlertType.INFORMATION, "Modification Successful", "User modified successfully.");
                 }
@@ -96,10 +105,29 @@ public class DisplayUser {
         } else {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a user to modify.");
         }
-
     }
 
+
+
+
     private final CrudUtilisateurs crudUtilisateurs = new CrudUtilisateurs();
+    private String calculateAge(String birthdate) {
+        if (birthdate == null) {
+            return "N/A"; // or any other default value or message
+        }
+
+        // Parse the birthdate string to a LocalDate object
+        LocalDate dob = LocalDate.parse(birthdate);
+
+        // Get the current date
+        LocalDate currentDate = LocalDate.now();
+
+        // Calculate the period between the birthdate and the current date
+        Period period = Period.between(dob, currentDate);
+
+
+        return String.valueOf(period.getYears());
+    }
     @FXML
     public void initialize() {
         // Initialize the table columns
@@ -107,16 +135,30 @@ public class DisplayUser {
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().prenomProperty());
         emailColumn.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
         roleColumn.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
+        // Populate the age column
+        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty()); // Add this line
 
         // Populate the TableView with user data
-
         List<Utilisateurs> userData = crudUtilisateurs.getAllData();
-        userTable.getItems().addAll(userData);
-        refreshTable();
+        for (Utilisateurs user : userData) {
+            // Calculate the age for each user and set it
+            user.setAge(calculateAge(user.getAge()));
+        }
+        userTable.getItems().addAll(userData); // Add users to table only once
+
+
+
+        // This might not be necessary since you're already adding the users
     }
-    private void refreshTable() {
+
+    public void refreshTable() {
         userTable.getItems().clear();
-        userTable.getItems().addAll(crudUtilisateurs.getAllData());
+        List<Utilisateurs> userData = crudUtilisateurs.getAllData();
+        for (Utilisateurs user : userData) {
+            // Calculate the age for each user and set it
+            user.setAge(calculateAge(user.getAge()));
+        }
+        userTable.getItems().addAll(userData);
     }
 
     private void showAlert(Alert.AlertType type, String title, String content) {

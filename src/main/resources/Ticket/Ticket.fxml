@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="281.0" prefWidth="470.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ticket.Ticket">
+
+    <!-- Title -->
+    <Label layoutX="196.0" layoutY="25.0" text="Buy Ticket" />
+
+    <!-- Transport ComboBox -->
+    <ComboBox fx:id="transportComboBox" layoutX="148.0" layoutY="58.0" prefWidth="200.0" promptText="Choose Transport">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Train" />
+                <String fx:value="Bus" />
+                <String fx:value="Metro" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <!-- From Label and List -->
+    <Label layoutX="84.0" layoutY="123.0" text="From:" />
+
+    <!-- To Label and List -->
+    <Label layoutX="91.0" layoutY="185.0" text="To:" />
+
+    <!-- Buy Button -->
+    <Button layoutX="216.0" layoutY="229.0" onAction="#buyTicket" text="Buy" textFill="#f8f8f8" />
+   <ComboBox fx:id="fromComboBox" layoutX="148.0" layoutY="173.0" prefWidth="200.0" promptText="Choose End station">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="Train" />
+            <String fx:value="Bus" />
+            <String fx:value="Metro" />
+         </FXCollections>
+      </items>
+   </ComboBox>
+   <ComboBox fx:id="toComboBox" layoutX="150.0" layoutY="119.0" prefWidth="200.0" promptText="Choose Start station">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="Train" />
+            <String fx:value="Bus" />
+            <String fx:value="Metro" />
+         </FXCollections>
+      </items>
+   </ComboBox>
+   <Label layoutX="25.0" layoutY="62.0" text="Means of transport :" />
+
+    <Button onAction="#logout" text="Déconnexion" />
+
+</AnchorPane>

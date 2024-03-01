@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import Services.CrudUtilisateurs;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class ResetPassword {
 
@@ -32,6 +33,10 @@ public class ResetPassword {
         this.email = email;
     }
 
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
     @FXML
     void resetPassword(ActionEvent event) {
         String newPassword = newPasswordField.getText();
@@ -43,11 +48,12 @@ public class ResetPassword {
             return;
         }
 
+
         // Get the email from the previous scene (you need to pass it from the ForgotPassword controller)
         System.out.println("Email from ForgotPassword: " + email);
         // Update the password in the database
         CrudUtilisateurs crudUtilisateurs = new CrudUtilisateurs();
-        crudUtilisateurs.resetPassword(email, newPassword);
+        crudUtilisateurs.resetPassword(email, hashPassword(newPassword));
 
         showAlert(Alert.AlertType.INFORMATION, "Success", "Password reset successfully.");
         switchScene("/Authentication.fxml", event);

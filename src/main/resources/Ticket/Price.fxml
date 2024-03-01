@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.scene.control.Button?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Ticket.Price">
+
+    <GridPane alignment="center" hgap="10" layoutX="75.0" layoutY="90.0" vgap="10">
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+        </padding>
+        <!-- Means of Transport -->
+        <Label text="Means of Transport:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label fx:id="transportLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-size: 16pt;" />
+        <!-- From Station -->
+        <Label text="From Station:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label fx:id="fromStationLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-size: 16pt;" />
+        <!-- To Station -->
+        <Label text="To Station:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label fx:id="toStationLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 16pt;" />
+        <!-- Price -->
+        <Label text="Price:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Label fx:id="priceLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 16pt;" />
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+
+
+    <!-- Ticket Information Header -->
+    <Label layoutX="247.0" layoutY="50.0" text="Ticket Information" style="-fx-font-size: 20pt; -fx-font-weight: bold;" />
+
+    <Button onAction="#logout" text="Déconnexion" />
+
+</AnchorPane>

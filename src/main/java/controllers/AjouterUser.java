@@ -3,6 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -14,12 +17,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Utilisateurs;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AjouterUser {
 
@@ -60,44 +61,104 @@ public class AjouterUser {
     private Label errorRoleLabel; // Add the missing Label attribute
 
     @FXML
+    private DatePicker AgeField;
+
+    @FXML
+    private Label errorAgeLabel;
+
+
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
+    @FXML
     void addUser(ActionEvent event) {
         String nom = NomField.getText();
         String prenom = PrenomField.getText();
         String email = EmailField.getText();
         String password = PasswordField.getText();
-        String role = RôleField.getValue(); // Get the selected role
+        String role = RôleField.getValue();
+        LocalDate selectedDate = AgeField.getValue();
 
         // Validate fields
-        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || role == null) {
+        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || role == null || selectedDate == null) {
+            // Display error messages for empty fields
             errorNomLabel.setText(nom.isEmpty() ? "Nom is required" : "");
             errorPrenomLabel.setText(prenom.isEmpty() ? "Prenom is required" : "");
             errorEmailLabel.setText(email.isEmpty() ? "Email is required" : "");
             errorPasswordLabel.setText(password.isEmpty() ? "Password is required" : "");
             errorRoleLabel.setText(role == null ? "Role is required" : "");
+            errorAgeLabel.setText(selectedDate == null ? "Age is required" : "");
+            return;
+
+        } else {
+            // Clear error labels if all fields are filled correctly
+            errorNomLabel.setText("");
+            errorPrenomLabel.setText("");
+            errorEmailLabel.setText("");
+            errorPasswordLabel.setText("");
+            errorRoleLabel.setText("");
+            errorAgeLabel.setText("");
+        }
+        String dateFormatRegex = "\\d{4}-\\d{2}-\\d{2}";
+        String selectedDateString = selectedDate.toString();
+        if (!selectedDateString.matches(dateFormatRegex)) {
+            errorAgeLabel.setText("Invalid date format");
+            return;
+        }
+        if (!isValidEmail(email)) {
+            errorEmailLabel.setText("Invalid email format");
             return;
         }
 
-        // Clear error labels if all fields are filled
-        errorNomLabel.setText("");
-        errorPrenomLabel.setText("");
-        errorEmailLabel.setText("");
-        errorPasswordLabel.setText("");
-        errorRoleLabel.setText("");
+        // Check if the email already exists
+        if (new CrudUtilisateurs().isEmailExistsInDatabase(email)) {
+            errorEmailLabel.setText("Email already exists");
+            return;
+        }
+        // Hash the password
+        String hashedPassword = hashPassword(password);
+
+
+        // Convert LocalDate to string
+        String age;
+
+            age = selectedDate.toString();
+
+
+
 
         // Proceed with user addition
-        Utilisateurs user = new Utilisateurs(nom, prenom, email, password, role);
+        Utilisateurs user = new Utilisateurs(nom, prenom, email, hashedPassword, role, age);
         CrudUtilisateurs userservice = new CrudUtilisateurs();
+
         try {
             userservice.addEntity(user);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("User added successfully");
             alert.show();
+            // Clear input fields after successful addition
+            NomField.clear();
+            PrenomField.clear();
+            EmailField.clear();
+            PasswordField.clear();
+            RôleField.getSelectionModel().clearSelection();
+            AgeField.setValue(null);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Failed to add user: " + e.getMessage());
             alert.show();
         }
     }
+
+
+
+
 
     @FXML
     private void goToDisplayUser(ActionEvent event) {
