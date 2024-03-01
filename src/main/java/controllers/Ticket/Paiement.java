@@ -35,7 +35,7 @@ public class Paiement {
     private TextField expiryDateField;
 
     // Stripe API secret key
-    private final String STRIPE_SECRET_KEY = "sk_test_51OouDsEilKEX8RIJTQYpiPOpvuf14RxYLxpxbai50AyMH3jcqbgsZW1ntLqJ8PQCuCb1bwN9wmFJ2L82XdAxYX4M00O8S2JiqU";
+    private final String STRIPE_SECRET_KEY = "";
 
     public void processPayment(ActionEvent event) {
         String cardNumber = cardNumberField.getText();
