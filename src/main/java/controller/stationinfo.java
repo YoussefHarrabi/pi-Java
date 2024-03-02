@@ -1,12 +1,9 @@
 package controller;
 
 import java.io.IOException;
-import java.net.URL;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Optional;
-import java.util.ResourceBundle;
-
-import entities.Commun_means_of_transport;
-import entities.Station;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,17 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import services.Commun_means_of_transportServices;
 import services.StationServices;
-
-
+import services.ticketServices;
+import entities.Station;
 public class stationinfo {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TableView<Station> liststat;
@@ -41,12 +31,14 @@ public class stationinfo {
     @FXML
     private TableColumn<Station, Void> actions;
 
+    @FXML
+    private TextField tckverif;
 
     @FXML
     StationServices statServices = new StationServices();
 
-
-
+    @FXML
+    ticketServices tckServices = new ticketServices();
 
     @FXML
     void initialize() {
@@ -57,6 +49,7 @@ public class stationinfo {
         address.setCellValueFactory(new PropertyValueFactory<>("Address"));
 
         liststat.setItems(list);
+
         actions.setCellFactory(param -> new TableCell<Station, Void>() {
 
             final javafx.scene.control.Button deleteButton = new javafx.scene.control.Button("Delete");
@@ -74,9 +67,8 @@ public class stationinfo {
                         deletestat(stat1);
                     }
                 });
-                liststat.setItems(list);
+                // Ajoutez d'autres actions au besoin...
             }
-
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -92,29 +84,57 @@ public class stationinfo {
                 }
             }
         });
-
     }
 
+    @FXML
+    void verification(ActionEvent event) {
+        try {
+            // Récupérer le ticket_id à partir du champ tckverif
+            int ticketId = Integer.parseInt(tckverif.getText());
 
-                public void back_to_add(javafx.event.ActionEvent actionEvent) throws IOException {
-                    try {
-                        Home.loadFXML("/ajouterstation.fxml");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            // Obtenir le temps de départ et la durée du trajet à partir de votre service ou base de données
+            // Supposons que vous avez une méthode dans votre service de tickets pour obtenir ces informations
+            LocalTime departureTime = tckServices.getDepartureTime(ticketId).toLocalTime();
+            LocalTime Traject_duration = tckServices.getTrajetDuration(ticketId).toLocalTime();
 
-                }
+            Time duration = tckServices.getTrajetDuration(ticketId);
 
-                private boolean confirmAction(String title, String message) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle(title);
-                    alert.setHeaderText(null);
-                    alert.setContentText(message);
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    return result.isPresent() && result.get() == ButtonType.OK;
-                }
-
+            // Vérifier si le temps de départ est dans les plages horaires spécifiées
+            if ((departureTime.isAfter(LocalTime.of(7, 0)) && departureTime.isBefore(LocalTime.of(9, 0))) ||
+                    (departureTime.isAfter(LocalTime.of(13, 0)) && departureTime.isBefore(LocalTime.of(14, 0)))) {
+                // Ajuster la durée du trajet
+                duration = Time.valueOf(Traject_duration.plusMinutes(15));
 
 
+                // Afficher une alerte pour informer l'utilisateur du possible retard
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Take in your consideration there will be a delay due to traffic, the new traject time is : "+duration);
+                alert.showAndWait();
+            }
+
+            // Autres traitements...
+
+        } catch (NumberFormatException e) {
+            // Gérer l'exception si le ticket_id n'est pas un entier valide
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Veuillez entrer un ticket_id valide.");
+            alert.showAndWait();
+        }
+    }
+
+    private boolean confirmAction(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
+    public void back_to_add(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/ajouterstation.fxml");
+    }
+
+    // Ajoutez d'autres méthodes au besoin...
 }

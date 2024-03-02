@@ -12,19 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commun_means_of_transportServices implements Iservices<Commun_means_of_transport> {
-    public void addEntity(Commun_means_of_transport Commun_means_of_transport) { /*
-        String requete = "INSERT INTO Commun_means_of_transport (registration_number,car_id,bus_id,train_id)  VALUES ('" + Commun_means_of_transport.getRegistration_number() + "','" + Commun_means_of_transport.getCar_id() +  "','" + Commun_means_of_transport.getBus_id() +"','" + Commun_means_of_transport.getTrain_id()+"')";
-
-
-        try {
-            Statement st = MyConnection.getInstance().getCnx().createStatement();
-            st.executeUpdate(requete);
-            System.out.println("Pesonne ajoutee");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    */
+    public void addEntity(Commun_means_of_transport Commun_means_of_transport) {
     }
 
     public static void addEntity2(Commun_means_of_transport Commun_means_of_transport) {

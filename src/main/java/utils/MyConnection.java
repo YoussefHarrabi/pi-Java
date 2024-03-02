@@ -21,8 +21,6 @@ public class MyConnection {
     public Connection getCnx()
     {
         return cnx;
-
-
     }
     public static MyConnection getInstance() {
         if (instance == null) {
