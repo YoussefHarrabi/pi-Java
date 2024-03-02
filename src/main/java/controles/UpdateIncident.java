@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import services.IncidentServices;
 
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 import java.util.function.IntBinaryOperator;
 import java.util.regex.Pattern;
@@ -56,7 +57,7 @@ public class UpdateIncident implements Initializable {
         int idIn = Integer.parseInt(IncidentId.getText());
         String type1 = type.getSelectionModel().getSelectedItem().toString();
         String place = placeTextField.getText();
-        String hour = hourTextField.getText();
+        Time hour = Time.valueOf(hourTextField.getText());
         String description = descriptionTextField.getText();
 
         IncidentServices incidentServices = new IncidentServices();

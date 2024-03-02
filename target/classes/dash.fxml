@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controles.dash"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-padding: 20;">
+    <VBox
+          alignment="CENTER"
+          spacing="10"
+          padding="20">
+
+        <!-- Header Section -->
+        <Button text="Smart Scape" styleClass="header-button"/>
+        <HBox spacing="10">
+            <Button text="Home" styleClass="nav-button"/>
+            <Button text="Transit" styleClass="nav-button"/>
+            <Button text="Traffic" styleClass="nav-button"/>
+            <Button text="Users" styleClass="nav-button"/>
+            <Button text="Tickets" styleClass="nav-button"/>
+            <Button text="Incidents" styleClass="nav-button"/>
+            <Button text="Carpooling" styleClass="nav-button"/>
+            <Button text="Infrastructure" styleClass="nav-button"/>
+        </HBox>
+
+        <!-- Main Content Area -->
+        <VBox spacing="10">
+            <Button text="Plan Your Trip" styleClass="quick-link"/>
+            <Button text="Purchase Tickets" styleClass="quick-link"/>
+            <Button text="Report Incident" styleClass="quick-link"/>
+        </VBox>
+
+        <!-- Footer Section -->
+        <Button text="Contact Us" styleClass="footer-button"/>
+        <Button text="Privacy Policy" styleClass="footer-button"/>
+        <Button text="Terms of Service" styleClass="footer-button"/>
+
+    </VBox>
+
+</AnchorPane>

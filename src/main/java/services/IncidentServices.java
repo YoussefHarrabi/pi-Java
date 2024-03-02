@@ -4,10 +4,7 @@ import entities.Incident;
 import interfaces.IServices;
 import Utiles.MyConnection;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +30,7 @@ public class IncidentServices implements IServices<Incident> {
             PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query);
             preparedStatement.setString(1, incident.getType());
             preparedStatement.setString(2, incident.getPlace());
-            preparedStatement.setString(3, incident.getHour());
+            preparedStatement.setString(3, String.valueOf(incident.getHour()));
             preparedStatement.setString(4, incident.getDescription());
 
 
@@ -87,7 +84,7 @@ public class IncidentServices implements IServices<Incident> {
                 i.setIncidentId(rs.getInt(1));
                 i.setType(rs.getString("Type"));
                 i.setPlace(rs.getString("Place"));
-                i.setHour(rs.getString("Hour"));
+                i.setHour(Time.valueOf(rs.getString("Hour")));
                 i.setDescription(rs.getString("Description"));
                 i.setDate(rs.getDate("Date"));
                 data.add(i);
@@ -119,12 +116,13 @@ public class IncidentServices implements IServices<Incident> {
         // Adjust this method based on the attributes of the Incident class
         return incident.getType() != null && incident.getType().toLowerCase().contains(keyword.toLowerCase()) ||
                 incident.getDescription() != null && incident.getDescription().toLowerCase().contains(keyword.toLowerCase()) ||
-                incident.getHour() != null && incident.getHour().toLowerCase().contains(keyword.toLowerCase()) ||
+                incident.getHour() != null && (String.valueOf(incident.getHour())).contains(keyword.toLowerCase()) ||
                 incident.getPlace() != null && incident.getPlace().toLowerCase().contains(keyword.toLowerCase()) ||
                 incident.getDate() != null && (String.valueOf(incident.getDate())).toLowerCase().contains(keyword.toLowerCase());
 
         // Add additional attributes as needed
     }
 
-
 }
+
+

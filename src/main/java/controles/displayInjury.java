@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import entities.Incident;
 import entities.Injury;
+import entities.RestCalculator;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +53,9 @@ public class displayInjury implements Initializable {
     private TableColumn<Injury, Integer> Numberpers;
 
     @FXML
+    private TableColumn<Injury, Integer> RestDays;
+
+    @FXML
     private TextField rechercheTextField;
 
     @FXML
@@ -89,6 +94,18 @@ public class displayInjury implements Initializable {
                 Home.switchSceneWithDataInjury(primaryStage, "/UpdateInjury.fxml", id, incidentId, type, severity, Number_pers);
             }
         });
+
+        RestDays.setCellValueFactory(data -> {
+            String injuryType = data.getValue().getType(); // Assuming you get the injury type from typeColumn
+            String severity = data.getValue().getSeverity(); // Assuming you get the severity from severityColumn
+
+            // Calculate rest days using RestCalculator
+            int restDays = RestCalculator.calculateRestDays(injuryType, severity);
+
+            // Wrap restDays in a SimpleIntegerProperty for display
+            return new SimpleIntegerProperty(restDays).asObject();
+        });
+
 
         // Event handler for the Add button
        AddBut.setOnMouseClicked(event -> {

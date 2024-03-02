@@ -10,7 +10,11 @@
    -fx-background-color: #E4DBC9;
    background-color: #2D2D30;
 }
-
+#report .button{
+   -fx-background-color: #DC143C;
+   -fx-text-fill: white;
+   -fx-border-color: #DC143C;
+}
 
 
 /* Label */
@@ -68,8 +72,8 @@
 }
 /* Style for MenuBar */
 .menu-bar {
-   -fx-background-color: #2D2D30;
-   background-color: #2D2D30;
+   -fx-background-color: #FFF;
+   background-color: #FFF;
    -fx-border-width: 0;
    border-width: 0;
 }
@@ -90,8 +94,8 @@
    -fx-border-width: 0;
    border-width: 0;
    -fx-text-fill: #AFB1B3;
-   -fx-background-color: #1A1A1A;
-   background-color: #1A1A1A;
+   -fx-background-color: #FFF;
+   background-color: #FFF;
 }
 .menu-item:hover {
    -fx-background-color: #3E3E40;
@@ -106,13 +110,14 @@
    cursor: HAND;
 }
 .context-menu {
-   -fx-background-color: #1A1A1A;
-   background-color: #1A1A1A;
+   -fx-background-color: #FFF;
+   background-color: #FFF;
    -fx-border-width: 0;
    border-width: 0;
    -fx-padding: 0 0 -1 0;
    padding: 0 0 -1 0;
 }
+
 
 
 
@@ -240,7 +245,7 @@
 
 
 /* ListView */
-.list-view{
+.list-view {
    -fx-background-radius: 0;
    -fx-background-color: #1A1A1A;
    background-color: #1A1A1A;
@@ -248,25 +253,24 @@
    border-width: 1;
    -fx-padding: 1;
    padding: 1;
+   /* Remove -fx-text-fill property to inherit default text color */
 }
-.list-view .scroll-bar{
+.list-view .scroll-bar {
    -fx-background-insets: 0 -1 0 0;
 }
-.list-view .scroll-bar .thumb{
+.list-view .scroll-bar .thumb {
    -fx-background-insets: 0 3 0 2;
 }
-.list-view:hover{
+.list-view:hover {
    -fx-border-color: #3E3E40;
    border-color: #3E3E40;
    -fx-padding: 0;
    padding: 0;
    -fx-background-insets: 1 1 0 1;
 }
-.list-view:focused{
+.list-view:focused {
    -fx-background-color: #1A1A1A;
    background-color: #1A1A1A;
-   -fx-border-color: #4e4e4e;
-   border-color: #4e4e4e;
    -fx-padding: 0 0 1 0;
    padding: 0 0 1 0;
    -fx-background-insets: 1;

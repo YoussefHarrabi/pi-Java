@@ -14,17 +14,18 @@
    <children>
       <TableView fx:id="InjuryTab" layoutX="26.0" layoutY="81.0" prefHeight="260.0" prefWidth="549.0">
         <columns>
-          <TableColumn fx:id="incidentIdColumn" prefWidth="135.0" text="Incident" />
-          <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="134.0" text="Type" />
-            <TableColumn fx:id="severityColumn" minWidth="0.0" prefWidth="140.0" text="severity" />
-            <TableColumn fx:id="Numberpers" minWidth="0.0" prefWidth="143.0" text="Number of people" />
+          <TableColumn fx:id="incidentIdColumn" prefWidth="118.0" text="Incident" />
+          <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="112.0" text="Type" />
+            <TableColumn fx:id="severityColumn" minWidth="0.0" prefWidth="101.0" text="severity" />
+            <TableColumn fx:id="Numberpers" minWidth="0.0" prefWidth="138.0" text="Number of people" />
+            <TableColumn fx:id="RestDays" minWidth="0.0" prefWidth="79.0" text="Rest days" />
         </columns>
       </TableView>
       <Button fx:id="AddBut" layoutX="174.0" layoutY="351.0" mnemonicParsing="false" text="ADD" />
       <Button fx:id="DeleteBut" layoutX="356.0" layoutY="351.0" mnemonicParsing="false" text="Delete" />
-      <HBox layoutX="10.0" prefHeight="82.0" prefWidth="564.0">
+      <HBox layoutX="25.0" prefHeight="82.0" prefWidth="549.0">
          <children>
-            <Button fx:id="back" mnemonicParsing="false" prefHeight="31.0" prefWidth="82.0" text="Back">
+            <Button fx:id="back" mnemonicParsing="false" prefHeight="31.0" prefWidth="88.0" text="Back">
                <HBox.margin>
                   <Insets top="30.0" />
                </HBox.margin>

@@ -7,7 +7,9 @@ import java.util.ResourceBundle;
 
 import entities.Incident;
 import entities.Injury;
+import entities.RestCalculator;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,6 +70,7 @@ public class AddInjury implements Initializable {
         if (!validateInput()) {
             return; // Exit method if input validation fails
         }
+
 
 
         Injury injury = new Injury(incidID.getSelectionModel().getSelectedItem().getIncidentId(), Type.getSelectionModel().getSelectedItem(),stringToInt(number_pers.getText()),sev);
