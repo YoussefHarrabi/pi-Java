@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controllers.MapController">
+      fx:controller="controllers.MapController"
+      spacing="10"
+      alignment="CENTER">
 
-    <WebView fx:id="mapView" />
+    <HBox spacing="10" alignment="CENTER">
+        <ImageView fitWidth="70" fitHeight="70">
+            <image>
+                <Image url="@weather.png" />
+            </image>
+        </ImageView>
+        <TextField fx:id="searchField" promptText="Enter location"/>
+        <Button text="Search" onAction="#searchLocation"/>
+        <ImageView fitWidth="70" fitHeight="70">
+            <image>
+                <Image url="@location.png" />
+            </image>
+        </ImageView>
+        <!-- Bouton pour voir les heures de pointe -->
+        <Button fx:id="peakHoursButton" text="Voir les heures de pointe" onAction="#redirectToAnalyse"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label fx:id="temperatureLabel" text=""/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label fx:id="windLabel" text=""/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label fx:id="rainLabel" text=""/>
+    </HBox>
+
+    <WebView fx:id="mapView" VBox.vgrow="ALWAYS"/>
 
 </VBox>
-
 

@@ -1,13 +1,17 @@
 package controllers;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import services.CapteursServices;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class Home extends Application {
 
@@ -16,31 +20,28 @@ public class Home extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CapteursController.fxml"));
-        try {
-            Parent root = loader.load(); // charger le fichier
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/Map.fxml"));
+        primaryStage.setTitle("Your App Title");
+        Scene scene = new Scene(root, 800, 600);
+        String css = this.getClass().getResource("/Map.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
-            // Initialiser le service et le passer au contrôleur
-            CapteursServices capteursService = new CapteursServices();
-            CapteursController controller = loader.getController();
-            controller.setCapteursService(capteursService);
+    public static class HomeController implements Initializable {
 
-            Scene scene = new Scene(root); // événement
-            primaryStage.setScene(scene); // pour mettre la scène
-            primaryStage.show(); // afficher l'ensemble de la scène
+        @FXML
+        private WebView mapView;
 
-            String css = this.getClass().getResource("/style.css").toExternalForm();
-            scene.getStylesheets().add(css);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        private WebEngine webEngine;
+
+        @Override
+        public void initialize(URL url, ResourceBundle resourceBundle) {
+            webEngine = mapView.getEngine();
+            webEngine.load(getClass().getResource("/Leaflet.html").toExternalForm());
+
         }
     }
 }
-
-
-
-
-
-
-

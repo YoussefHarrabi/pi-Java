@@ -56,4 +56,13 @@ public class DonneesHistoriques {
     public void setConditionsMeteo(String conditionsMeteo) {
         this.conditionsMeteo = conditionsMeteo;
     }
-}
+
+
+    public String getHeureCapture() {
+            // Supposons que le format de l'horodatage soit HH:mm:ss
+            // Vous pouvez adapter cette méthode en fonction du format réel de votre horodatage
+            return timestamp.substring(0, 8); // Récupère les 8 premiers caractères pour obtenir l'heure
+        }
+
+    }
+

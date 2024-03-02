@@ -23,48 +23,33 @@
     document.head.appendChild(leafletScript);
 
     function initializeMap() {
-        var map = L.map('map').setView([33.8869, 9.5375], 7); // Coordonnées centrées de la Tunisie et niveau de zoom approprié
+        var map = L.map('map').setView([33.8869, 9.5375], 7);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // Expose la fonction addMarker pour être appelée depuis JavaFX
         window.addMarker = function (idCapteur, latitude, longitude, couleur) {
-            console.log("Ajout du marqueur pour le capteur avec l'ID : " + idCapteur);
-
             var marker = L.marker([latitude, longitude], {icon: customIcon(couleur)});
             marker.addTo(map);
             marker.bindPopup("ID Capteur: " + idCapteur);
-            marker.on('click', function () {
-                markerClicked(idCapteur);
-            });
         };
-
-        function markerClicked(idCapteur) {
-            // Logique à exécuter lorsqu'un marqueur est cliqué
-            console.log("Marqueur cliqué pour le capteur avec l'ID : " + idCapteur);
-            // Vous pouvez ajouter plus de logique ici en fonction de vos besoins
-        }
 
         function customIcon(couleur) {
             return L.divIcon({
                 className: 'custom-icon',
-                iconSize: [30, 30],
-                iconAnchor: [15, 30],
-                popupAnchor: [0, -30],
                 html: '<div style="background-color: ' + couleur + '; width: 100%; height: 100%; border-radius: 50%;"></div>'
             });
         }
+
+        // Fonction pour déplacer la carte vers une nouvelle position
+        window.moveMapToLocation = function(latitude, longitude) {
+            map.setView([latitude, longitude], 15); // 15 est un exemple de niveau de zoom plus élevé
+        }
+
     }
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
