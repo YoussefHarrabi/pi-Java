@@ -151,7 +151,8 @@ public class CommunMeansOfTransportInfo {
 
     @FXML
     void initialize() {
-        ObservableList<Commun_means_of_transport> list = FXCollections.observableList(moyenServices.getAllData());
+        ObservableList<Commun_means_of_transport> list = FXCollections.observableList(moyenServices.
+                getAllData());
         id_moy.setCellValueFactory(new PropertyValueFactory<>("id"));
         reg_moy.setCellValueFactory(new PropertyValueFactory<>("registration_number"));
         type_moy.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -223,3 +224,7 @@ public class CommunMeansOfTransportInfo {
         Home.loadFXML("/AjouerCommun_means_of_transport.fxml");
     }
 }
+
+
+
+

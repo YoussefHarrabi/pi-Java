@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Optional;
+
+import entities.SMSsender;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,6 +41,9 @@ public class stationinfo {
 
     @FXML
     ticketServices tckServices = new ticketServices();
+
+    @FXML
+    private TextField TelField;
 
     @FXML
     void initialize() {
@@ -106,10 +111,21 @@ public class stationinfo {
                 duration = Time.valueOf(Traject_duration.plusMinutes(15));
 
 
-                // Afficher une alerte pour informer l'utilisateur du possible retard
+                /* Afficher une alerte pour informer l'utilisateur du possible retard
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Take in your consideration there will be a delay due to traffic, the new traject time is : "+duration);
-                alert.showAndWait();
+                alert.showAndWait(); */
+                String tel1 = TelField.getText();
+               // String messageBody = "Votre message dynamique ici"+duration;
+
+                // Appeler la méthode SMSSender de SmsSender avec le numéro de téléphone récupéré
+               // SMSsender.sendSMS(tel1);
+
+                // Créer une instance de SMSsender en fournissant le corps du message
+                SMSsender smsSender = new SMSsender("Take in your consideration there will be a delay due to traffic, the new traject time is"+duration);
+
+                // Appeler la méthode sendSMS sur l'instance créée avec le numéro de téléphone récupéré
+                smsSender.sendSMS(tel1);
             }
 
             // Autres traitements...
@@ -134,6 +150,10 @@ public class stationinfo {
 
     public void back_to_add(ActionEvent actionEvent) throws IOException {
         Home.loadFXML("/ajouterstation.fxml");
+    }
+
+    public void openmaps(ActionEvent actionEvent) throws IOException {
+        Home.loadFXML("/map.fxml");
     }
 
     // Ajoutez d'autres méthodes au besoin...

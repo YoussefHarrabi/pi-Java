@@ -9,31 +9,30 @@ import java.sql.Connection;
 
 public class SMSsender {
 
-    Connection cnx;
+    private Connection cnx;
+    private static String messageBody; // Ajout du champ messageBody
 
-    public SMSsender() {
+    public SMSsender(String messageBody) {
         cnx = MyConnection.getInstance().getCnx();
+        this.messageBody = messageBody; // Initialisation du champ messageBody
     }
 
     // twilio.com/console
     public static final String ACCOUNT_SID = "AC071be9549f8729e64e1d0c767470d51b";
-    public static final String AUTH_TOKEN = "034a82b0aa1dfe2723a6b61df781c283";
+    public static final String AUTH_TOKEN = "6a3eb58033746128f346356c06cca01b";
 
-    public static void main(String[] args) {
+    // Reste du code...
 
-    }
-
-    public static void sendSMS(String clientPhoneNumber, String s) {
-
+    public static void sendSMS(String clientPhoneNumber) {
         String accountSid = "AC071be9549f8729e64e1d0c767470d51b";
-        String authToken =   "034a82b0aa1dfe2723a6b61df781c283";
+        String authToken = "6a3eb58033746128f346356c06cca01b";
 
         try {
             Twilio.init(accountSid, authToken);
             Message message = Message.creator(
                     new PhoneNumber("+216" + clientPhoneNumber),
                     new PhoneNumber("+18573924757"),
-                    "Vous avez un retard"
+                    messageBody // Utilisation du champ messageBody ici
             ).create();
 
             System.out.println("SID du message : " + message.getSid());
