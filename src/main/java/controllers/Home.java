@@ -22,7 +22,7 @@ public class Home extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Map.fxml"));
-        primaryStage.setTitle("Your App Title");
+        primaryStage.setTitle("Destination's Traffic");
         Scene scene = new Scene(root, 800, 600);
         String css = this.getClass().getResource("/Map.css").toExternalForm();
         scene.getStylesheets().add(css);

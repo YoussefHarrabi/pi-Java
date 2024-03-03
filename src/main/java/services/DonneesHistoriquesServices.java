@@ -63,10 +63,16 @@ public class DonneesHistoriquesServices implements IServices<DonneesHistoriques>
                 data.add(donnees);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur lors de la récupération des données historiques : " + e.getMessage());
+            e.printStackTrace(); // Ajoutez cette ligne pour imprimer la trace de la pile
         }
+
+        // Ajouter une instruction d'impression pour vérifier le nombre de données récupérées
+        System.out.println("Nombre de données historiques récupérées : " + data.size());
+
         return data;
     }
+
 
 
 
@@ -103,47 +109,7 @@ public class DonneesHistoriquesServices implements IServices<DonneesHistoriques>
     }
 
 
-    public List<DonneesHistoriques> getDerniersEnregistrementsEmbouteillageSuperieurTrois() {
-        // Récupérer toutes les données historiques
-        List<DonneesHistoriques> donneesHistoriques = getAllData();
 
-        // Map pour stocker les derniers enregistrements de chaque capteur avec un niveau d'embouteillage > 3
-        Map<Integer, List<DonneesHistoriques>> derniersEnregistrementsParCapteur = new HashMap<>();
-
-        // Parcourir les données historiques et mettre à jour la map avec les derniers enregistrements de chaque capteur
-        for (DonneesHistoriques donnee : donneesHistoriques) {
-            // Vérifier si le niveau d'embouteillage est supérieur à 3
-            if (donnee.getNiveauEmbouteillage() > 3) {
-                // Vérifier si le capteur est déjà présent dans la map
-                if (derniersEnregistrementsParCapteur.containsKey(donnee.getIdCapteur())) {
-                    // Récupérer la liste des enregistrements actuels pour ce capteur
-                    List<DonneesHistoriques> enregistrementsActuels = derniersEnregistrementsParCapteur.get(donnee.getIdCapteur());
-                    // Vérifier si cet enregistrement est plus récent que le dernier enregistré
-                    if (enregistrementsActuels.isEmpty() || donnee.getTimestamp().compareTo(enregistrementsActuels.get(0).getTimestamp()) > 0) {
-                        // Ajouter cet enregistrement au début de la liste (les données sont triées par ordre décroissant de timestamp)
-                        enregistrementsActuels.add(0, donnee);
-                        // S'assurer que la liste ne dépasse pas 3 enregistrements
-                        if (enregistrementsActuels.size() > 3) {
-                            enregistrementsActuels.remove(3);
-                        }
-                    }
-                } else {
-                    // Si le capteur n'est pas encore présent dans la map, créer une nouvelle liste et y ajouter cet enregistrement
-                    List<DonneesHistoriques> nouveauxEnregistrements = new ArrayList<>();
-                    nouveauxEnregistrements.add(donnee);
-                    derniersEnregistrementsParCapteur.put(donnee.getIdCapteur(), nouveauxEnregistrements);
-                }
-            }
-        }
-
-        // Construire la liste finale des derniers enregistrements de chaque capteur
-        List<DonneesHistoriques> derniersEnregistrements = new ArrayList<>();
-        for (List<DonneesHistoriques> enregistrements : derniersEnregistrementsParCapteur.values()) {
-            derniersEnregistrements.addAll(enregistrements);
-        }
-
-        return derniersEnregistrements;
-    }
 
 
 }

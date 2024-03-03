@@ -14,21 +14,15 @@
       spacing="10"
       alignment="CENTER">
 
-    <HBox spacing="10" alignment="CENTER">
-        <ImageView fitWidth="70" fitHeight="70">
-            <image>
-                <Image url="@weather.png" />
-            </image>
+    <HBox spacing="15" alignment="CENTER">
+        <ImageView fitWidth="50" fitHeight="50">
+            <image><Image url="@weather.png" /></image>
         </ImageView>
-        <TextField fx:id="searchField" promptText="Enter location"/>
+        <TextField fx:id="searchField" promptText="Enter location" maxWidth="200"/>
         <Button text="Search" onAction="#searchLocation"/>
-        <ImageView fitWidth="70" fitHeight="70">
-            <image>
-                <Image url="@location.png" />
-            </image>
+        <ImageView fitWidth="50" fitHeight="50">
+            <image><Image url="@location.png" /></image>
         </ImageView>
-        <!-- Bouton pour voir les heures de pointe -->
-        <Button fx:id="peakHoursButton" text="Voir les heures de pointe" onAction="#redirectToAnalyse"/>
     </HBox>
 
     <HBox spacing="10" alignment="CENTER">
@@ -41,6 +35,9 @@
 
     <HBox spacing="10" alignment="CENTER">
         <Label fx:id="rainLabel" text=""/>
+    </HBox>
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="peakHoursButton" text="Check rush hours" onAction="#redirectToAnalyse" styleClass="button-peak-hours"/>
     </HBox>
 
     <WebView fx:id="mapView" VBox.vgrow="ALWAYS"/>

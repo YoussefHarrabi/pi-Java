@@ -23,7 +23,7 @@
     document.head.appendChild(leafletScript);
 
     function initializeMap() {
-        var map = L.map('map').setView([33.8869, 9.5375], 7);
+        var map = L.map('map').setView([33.8869, 9.5375], 6);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
@@ -44,7 +44,7 @@
 
         // Fonction pour déplacer la carte vers une nouvelle position
         window.moveMapToLocation = function(latitude, longitude) {
-            map.setView([latitude, longitude], 15); // 15 est un exemple de niveau de zoom plus élevé
+            map.setView([latitude, longitude], 15);
         }
 
     }

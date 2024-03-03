@@ -1,8 +1,10 @@
 package controllers;
 
 import entities.Capteurs;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -54,13 +56,30 @@ public class CapteursController {
         // Récupérer les valeurs des champs
         String nom = nomField.getText();
         String type = typeField.getText();
-        float latitude = Float.parseFloat(latitudeField.getText());
-        float longitude = Float.parseFloat(longitudeField.getText());
+        String latitudeText = latitudeField.getText();
+        String longitudeText = longitudeField.getText();
         String dateInstallation = dateInstallationField.getText();
 
+        // Vérifier si les champs sont vides
+        if (nom.isEmpty() || type.isEmpty() || latitudeText.isEmpty() || longitudeText.isEmpty() || dateInstallation.isEmpty()) {
+            // Afficher une alerte indiquant que tous les champs doivent être remplis
+            afficherNotification("Veuillez remplir tous les champs.");
+            return; // Sortir de la méthode si des champs sont vides
+        }
+
+        // Convertir les champs de latitude et de longitude en nombres flottants
+        float latitude, longitude;
+        try {
+            latitude = Float.parseFloat(latitudeText);
+            longitude = Float.parseFloat(longitudeText);
+        } catch (NumberFormatException e) {
+            // Afficher une alerte indiquant que les valeurs de latitude et de longitude doivent être des nombres valides
+            afficherNotification("Les valeurs de latitude et de longitude doivent être des nombres valides.");
+            return; // Sortir de la méthode en cas d'erreur de conversion
+        }
 
         // Créer un objet Capteurs avec les valeurs
-        Capteurs nouveauCapteur = new Capteurs(nom, type, latitude, longitude,dateInstallation );
+        Capteurs nouveauCapteur = new Capteurs(nom, type, latitude, longitude, dateInstallation);
 
         // Appeler la méthode d'ajout du service
         capteursService.addEntity(nouveauCapteur);
@@ -68,6 +87,20 @@ public class CapteursController {
         // Effacer les champs après l'ajout
         clearFields();
     }
+
+    @FXML
+    public void afficherNotification(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+    }
+
+
+
 
     @FXML
     public void afficherListeCapteurs(ActionEvent event) {

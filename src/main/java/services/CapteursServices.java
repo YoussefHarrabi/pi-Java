@@ -41,6 +41,13 @@ public class CapteursServices implements IServices<Capteurs> {
 
     @Override
     public void addEntity(Capteurs capteurs) {
+        // Vérifier si les champs sont remplis
+        if (capteurs.getNom().isEmpty() || capteurs.getType().isEmpty() || capteurs.getDateInstallation().isEmpty() ) {
+            afficherNotification("Veuillez remplir tous les champs.");
+            return; // Arrêter l'exécution de la méthode si des champs ne sont pas remplis
+        }
+
+
         // Vérifier si le nom du capteur existe déjà
         if (!isCapteurNameExists(capteurs.getNom())) {
             String requete = "INSERT INTO capteurs (Nom, Type, Latitude, Longitude, DateInstallation) VALUES (?, ?, ?, ?, ?)";
@@ -52,17 +59,14 @@ public class CapteursServices implements IServices<Capteurs> {
                 pst.setFloat(4, capteurs.getLongitude());
                 pst.setString(5, capteurs.getDateInstallation());
                 pst.executeUpdate();
-
-
-
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         } else {
-
             afficherNotification("Le nom du capteur existe déjà. Veuillez choisir un nom différent.");
         }
     }
+
 
     // Méthode pour afficher une notification dans l'interface
     public void afficherNotification(String message) {
@@ -148,33 +152,6 @@ public class CapteursServices implements IServices<Capteurs> {
 
     }
 
-    public List<Capteurs> getCapteursProches(int capteurId, double distanceMax) {
-        Capteurs capteurReference = getEntityById(capteurId); // Méthode pour récupérer un capteur par son ID
-
-        if (capteurReference != null) {
-            List<Capteurs> capteursProches = new ArrayList<>();
-
-            // Récupérez tous les capteurs de la base de données (vous pouvez optimiser selon votre situation)
-            List<Capteurs> tousLesCapteurs = getAllData();
-
-            for (Capteurs capteur : tousLesCapteurs) {
-                if (capteur.getIdCapteur() != capteurId) { // Évitez de comparer avec le capteur de référence lui-même
-                    double distance = haversine(
-                            capteurReference.getLatitude(), capteurReference.getLongitude(),
-                            capteur.getLatitude(), capteur.getLongitude()
-                    );
-
-                    if (distance <= distanceMax) {
-                        capteursProches.add(capteur);
-                    }
-                }
-            }
-
-            return capteursProches;
-        }
-
-        return new ArrayList<>(); // Retournez une liste vide si le capteur de référence n'est pas trouvé
-    }
 
     // Formule de Haversine pour calculer la distance entre deux points géographiques
     private double haversine(double lat1, double lon1, double lat2, double lon2) {
