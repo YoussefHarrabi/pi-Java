@@ -2,6 +2,7 @@ package services;
 
 import entities.Commun_means_of_transport;
 import interfaces.Iservices;
+import javafx.collections.ObservableList;
 import utils.MyConnection;
 
 import java.sql.PreparedStatement;
@@ -79,7 +80,7 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
     @Override
     public List<Commun_means_of_transport> getAllData() {
         List<Commun_means_of_transport> data = new ArrayList<>();
-        String requete = "SELECT * FROM Commun_means_of_transport";
+        String requete = "SELECT * FROM commun_means_of_transport";
         try {
             Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet rs = st.executeQuery(requete);
@@ -112,6 +113,8 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
     } */
 
 
+
+
     public boolean isRegistrationNumberExists(String registrationNumber) {
         String query = "SELECT * FROM Commun_means_of_transport WHERE registration_number = ?";
         try (PreparedStatement preparedStatement = MyConnection.getInstance().getCnx().prepareStatement(query)) {
@@ -124,6 +127,68 @@ public class Commun_means_of_transportServices implements Iservices<Commun_means
             return false;
         }
     }
+
+    public long countBuses() {
+        Commun_means_of_transportServices moyenServices = new Commun_means_of_transportServices();
+        List<Commun_means_of_transport> transports = moyenServices.getAllData();
+
+        // Use Java Streams to count the number of buses
+        return transports.stream()
+                .filter(transport -> "bus".equals(transport.getType()))
+                .count();
+    }/*
+
+
+    public int getCountOfPaniersWithTotalPriceGreaterThan100() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM panier p JOIN product pr ON p.id_produit = pr.id WHERE p.quantite * pr.price > 100";
+
+        try (PreparedStatement pst = new MyConnection().getCnx().prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+
+    public int getCountOfPaniersWithTotalPriceLessThanEqual100() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM panier p JOIN product pr ON p.id_produit = pr.id WHERE p.quantite * pr.price <= 100";
+
+        try (PreparedStatement pst = new MyConnection().getCnx().prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+
+    */
+
+    public long countTrains() {
+        Commun_means_of_transportServices moyenServices = new Commun_means_of_transportServices();
+        List<Commun_means_of_transport> transports = moyenServices.getAllData();
+
+        // Use Java Streams to count the number of trains
+        return transports.stream()
+                .filter(transport -> "train".equals(transport.getType()))
+                .count();
+    }
+
 
 
 }

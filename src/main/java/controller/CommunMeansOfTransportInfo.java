@@ -109,19 +109,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import services.Commun_means_of_transportServices;
 
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -147,10 +148,16 @@ public class CommunMeansOfTransportInfo {
     @FXML
     private TableColumn<?, ?> type_moy;
     @FXML
+    private Button displayPieChart;
+
+    @FXML
     Commun_means_of_transportServices moyenServices = new Commun_means_of_transportServices();
 
     @FXML
     void initialize() {
+
+       // displayPieChart.setOnAction(this::handleDisplayPieChart);
+
         ObservableList<Commun_means_of_transport> list = FXCollections.observableList(moyenServices.
                 getAllData());
         id_moy.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -205,6 +212,50 @@ public class CommunMeansOfTransportInfo {
         });
         listMoy.setItems(list);
     }
+
+
+
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/chart.fxml"));
+
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
+
+    // int countGreaterThan100 = (int) panierServices.countBuses();
+
+
+    @FXML
+    void displayPieChart(ActionEvent event) throws IOException {
+        Commun_means_of_transportServices moyenServices  = new Commun_means_of_transportServices();
+
+        long bus = moyenServices.countBuses();
+        long train = moyenServices.countTrains();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Chart.fxml"));
+        Parent root = loader.load();
+
+        Chart pieChartController = loader.getController();
+        pieChartController.initializePieChart(bus, train);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Panier Pie Chart");
+        stage.show();
+    }
+
+
+
+
+
+
 
     private boolean confirmAction(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

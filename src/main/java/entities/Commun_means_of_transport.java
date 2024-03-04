@@ -50,4 +50,7 @@ public class Commun_means_of_transport {
                 ", type='" + type + '\'' +
                 '}';
     }
+
+
+
 }

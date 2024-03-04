@@ -17,5 +17,6 @@
       </TableView>
       <Button layoutX="236.0" layoutY="396.0" mnemonicParsing="false" onAction="#go_to_station" text="Go to add station" />
       <Button layoutX="191.0" layoutY="447.0" mnemonicParsing="false" onAction="#back_to_add_mean" text="Go back to add commun mean" />
+      <Button layoutX="516.0" layoutY="421.0" mnemonicParsing="false" onAction="#displayPieChart" text="chart" />
    </children>
 </AnchorPane>
