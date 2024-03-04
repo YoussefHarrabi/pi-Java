@@ -20,9 +20,11 @@
       <Button layoutX="215.0" layoutY="510.0" mnemonicParsing="false" onAction="#back_to_add" text="Go back to add station" />
       <TextField fx:id="tckverif" layoutX="225.0" layoutY="26.0" />
       <Button layoutX="475.0" layoutY="62.0" mnemonicParsing="false" onAction="#verification" prefWidth="137.0" text="verification" />
-      <Label layoutX="77.0" layoutY="8.0" prefHeight="61.0" prefWidth="173.0" text="Enter Ticket id" />
+      <Label layoutX="77.0" layoutY="8.0" prefHeight="61.0" prefWidth="173.0" text="Enter code" />
       <TextField fx:id="TelField" layoutX="225.0" layoutY="85.0" />
       <Label layoutX="68.0" layoutY="87.0" text="Enter phone number" />
       <Button layoutX="215.0" layoutY="558.0" mnemonicParsing="false" onAction="#openmaps" prefWidth="173.0" text="Go to Maps" />
+      <TextField fx:id="searchField" layoutX="226.0" layoutY="143.0" />
+      <Button layoutX="511.0" layoutY="143.0" mnemonicParsing="false" onAction="#searchStation" text="search" />
    </children>
 </AnchorPane>

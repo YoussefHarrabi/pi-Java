@@ -8,6 +8,8 @@ import java.util.Optional;
 import entities.SMSsender;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -37,6 +39,10 @@ public class stationinfo {
     private TextField tckverif;
 
     @FXML
+    private TextField searchField;
+
+
+    @FXML
     StationServices statServices = new StationServices();
 
     @FXML
@@ -48,6 +54,7 @@ public class stationinfo {
     @FXML
     void initialize() {
 
+
         ObservableList<Station> list = FXCollections.observableList(StationServices.getAllData1());
         ID.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("Name"));
@@ -57,8 +64,8 @@ public class stationinfo {
 
         actions.setCellFactory(param -> new TableCell<Station, Void>() {
 
-            final javafx.scene.control.Button deleteButton = new javafx.scene.control.Button("Delete");
-            final javafx.scene.control.Button updateButton = new javafx.scene.control.Button("Update");
+            final Button deleteButton = new Button("Delete");
+            final Button updateButton = new Button("Update");
 
             private void deletestat(Station stat) {
                 statServices.deleteEntity(stat);
@@ -89,6 +96,39 @@ public class stationinfo {
                 }
             }
         });
+        FilteredList<Station> filteredStations = new FilteredList<>(FXCollections.observableList(StationServices.getAllData1()), p -> true);
+
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredStations.setPredicate(st -> {       System.out.println("Name: " + st.getName() + ", Address: " + st.getAddress());
+                System.out.println("Filter: " + newValue);
+                // If filter text is empty, display all users.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare user name with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (st.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches name.
+                } else if (st.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches surname.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        // Wrap the FilteredList in a SortedList.
+        SortedList<Station> sortedData = new SortedList<>(filteredStations);
+
+        // Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(liststat.comparatorProperty());
+
+        // Add sorted (and filtered) data to the table.
+        liststat.setItems(sortedData);
+
+
     }
 
     @FXML
@@ -156,5 +196,26 @@ public class stationinfo {
         Home.loadFXML("/map.fxml");
     }
 
+    @FXML
+    void searchStation(ActionEvent actionEvent) {
+        String searchTerm = searchField.getText().trim();
+        if (!searchTerm.isEmpty()) {
+            ObservableList<Station> filteredList = FXCollections.observableArrayList();
+
+            for (Station station : liststat.getItems()) {
+                if (station.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    filteredList.add(station);
+                }
+            }
+
+            liststat.setItems(filteredList);
+        } else {
+            // If the search field is empty, display all stations
+            liststat.setItems(FXCollections.observableList(StationServices.getAllData1()));
+        }
+    }
+
     // Ajoutez d'autres méthodes au besoin...
+
+
 }

@@ -111,7 +111,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -122,7 +121,6 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -149,6 +147,15 @@ public class CommunMeansOfTransportInfo {
     private TableColumn<?, ?> type_moy;
     @FXML
     private Button displayPieChart;
+    @FXML
+    private TextField efficacite;
+
+    @FXML
+    private TextField ponctualite;
+    @FXML
+    private TextField note;
+
+
 
     @FXML
     Commun_means_of_transportServices moyenServices = new Commun_means_of_transportServices();
@@ -247,7 +254,7 @@ public class CommunMeansOfTransportInfo {
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.setTitle("Panier Pie Chart");
+        stage.setTitle("chartpie");
         stage.show();
     }
 
@@ -266,6 +273,40 @@ public class CommunMeansOfTransportInfo {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+    @FXML
+    void Rating(ActionEvent event) {
+        double calculatedRating;
+        // Retrieve the values of the text fields
+        double efficace= Double.parseDouble(efficacite.getText());
+        double ponct = Double.parseDouble(ponctualite.getText());
+       // double preparation = Double.parseDouble(preparationField.getText());
+     //   double evaluations = Double.parseDouble(note.getText());
+
+        // Define weights for each criterion
+        double efficaceWeight = 0.5;
+        double ponctWeight = 0.5;
+
+        //double evaluationsWeight = 0.1;
+
+        // Calculate the weighted sum of the criteria
+        double weightedQuality = efficace * efficaceWeight;
+        double weightedInteraction = ponct * ponctWeight;
+
+     //   double weightedEvaluations = evaluations * evaluationsWeight;
+
+        // Calculate the overall rating
+        double overallRating = weightedQuality + weightedInteraction ;
+        Commun_means_of_transport train = listMoy.getSelectionModel().getSelectedItem();
+        if (train!= null) {
+            // Display the calculated rating in the corresponding text field
+            calculatedRating = overallRating;
+            note.setText(String.valueOf(calculatedRating));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("no selectected train");
+            alert.show();
+        }
+    }
 
     public void go_to_station(ActionEvent actionEvent) throws IOException {
         Home.loadFXML("/ajouterstation.fxml");
@@ -274,6 +315,8 @@ public class CommunMeansOfTransportInfo {
     public void back_to_add_mean(ActionEvent actionEvent) throws IOException {
         Home.loadFXML("/AjouerCommun_means_of_transport.fxml");
     }
+
+
 }
 
 
