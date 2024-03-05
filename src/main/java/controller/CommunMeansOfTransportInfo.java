@@ -105,6 +105,7 @@ public class CommunMeansOfTransportInfo {
 package controller;
 
 import entities.Commun_means_of_transport;
+import entities.Pdf;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -114,15 +115,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.Commun_means_of_transportServices;
 
 import javafx.event.ActionEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class CommunMeansOfTransportInfo {
 
@@ -303,10 +308,32 @@ public class CommunMeansOfTransportInfo {
             note.setText(String.valueOf(calculatedRating));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("no selectected train");
+            alert.setContentText("No selectected mean of transport");
             alert.show();
         }
     }
+
+    @FXML
+    void genererpdf(ActionEvent event) {
+        Commun_means_of_transportServices moyenServices  = new  Commun_means_of_transportServices ();
+        // Extract data from the TableView
+        ObservableList<Commun_means_of_transport> items = listMoy.getItems();
+        List<Commun_means_of_transport> dataList = items.stream().collect(Collectors.toList());
+
+        // Create a new TableView and populate it with the data
+        TableView<Commun_means_of_transport> newDataTableView = new TableView<>();
+        newDataTableView.setItems(FXCollections.observableList(dataList));
+
+        // Now you can pass newDataTableView to the generatePDF method
+        String filePath = "C:/Users/mayss/Desktop/projet/pi-Java/src/main/resources/PDF/List.pdf";
+        try {
+            Pdf.generatePDF(newDataTableView, filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     public void go_to_station(ActionEvent actionEvent) throws IOException {
         Home.loadFXML("/ajouterstation.fxml");
